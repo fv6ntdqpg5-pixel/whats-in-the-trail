@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Why one aircraft draws a line across the sky and the next leaves nothing, what a spray program would take in gallons, mines and people, and which programs are really on the record.">
+<meta property="og:title" content="What's in the Trail?">
+<meta property="og:description" content="Why one aircraft draws a line across the sky and the next leaves nothing, what a spray program would take in gallons, mines and people, and which programs are really on the record.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>What's in the Trail</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a side-on slice of sky you fly through, then a terminal operator's ledger for the spray claim,
+   then a register of the programs that are on the record. Same instrument-panel family as Sea Level to Space. */
+:root{
+  --paper:#edf1f5; --panel:#fafbfc; --ink:#10202f; --ink-2:#42556a; --ink-3:#6b7d90; --rule:#ccd6e0;
+  --accent:#b25f00; --accent-ink:#ffffff; --accent-soft:#f6e3c8;
+  --sky-a:#5d9bd6; --sky-b:#2f67b3; --sky-c:#17306c; --sky-d:#0b1238; --on-sky:#ffffff;
+  --st-none:#c2551f; --st-short:#5b6f84; --st-long:#1f6fcc; --st-none-soft:#f8ddd0; --st-short-soft:#dfe6ee; --st-long-soft:#d5e6fa;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --f-display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0c1420; --panel:#131e2d; --ink:#e8eef5; --ink-2:#a9b8c8; --ink-3:#7e8fa3; --rule:#27364b;
+  --accent:#f0a430; --accent-ink:#1a1204; --accent-soft:#3a2a10;
+  --st-none:#f08a5c; --st-short:#93a5b8; --st-long:#5aa2f2; --st-none-soft:#3d2217; --st-short-soft:#1f2c3d; --st-long-soft:#15304f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --paper:#0c1420; --panel:#131e2d; --ink:#e8eef5; --ink-2:#a9b8c8; --ink-3:#7e8fa3; --rule:#27364b;
+  --accent:#f0a430; --accent-ink:#1a1204; --accent-soft:#3a2a10;
+  --st-none:#f08a5c; --st-short:#93a5b8; --st-long:#5aa2f2; --st-none-soft:#3d2217; --st-short-soft:#1f2c3d; --st-long-soft:#15304f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:28px 56px;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,6vw,3.6rem);letter-spacing:.005em;text-transform:uppercase}
+h2{font-size:1.75rem;text-transform:uppercase;letter-spacing:.02em}
+h3{font-size:1.25rem;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lab{font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.num{font-family:var(--f-data);font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:18px}
+.sec-lede{color:var(--ink-2);max-width:68ch}
+
+header.top{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+header.top .lede{max-width:60ch;color:var(--ink-2);margin-top:10px}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--panel)}
+.seg button{font:600 .9rem var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border:0;background:transparent;color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.btn{font:600 .9rem var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink-2);cursor:pointer}
+.btn[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
+
+/* sky scene */
+.scene{display:flex;flex-direction:column;gap:10px;min-width:0}
+#skyWrap{position:relative;border-radius:6px;overflow:hidden;height:380px;background:var(--sky-c);touch-action:pan-x}
+#sky{display:block;width:100%;height:100%;cursor:ns-resize}
+.scene-bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.scale-note{font-size:.8rem;color:var(--ink-3);max-width:90ch}
+.explorer{display:grid;gap:22px 36px;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}
+.ctrl{display:flex;flex-direction:column;gap:14px;min-width:0}
+.slider{display:flex;flex-direction:column;gap:4px}
+.slider label{display:flex;justify-content:space-between;gap:12px;font-size:.92rem;color:var(--ink-2)}
+.slider label .num{color:var(--ink);font-weight:500;text-align:right}
+.slider input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+.slider .hint{font-size:.8rem;color:var(--ink-3)}
+.hud{display:flex;flex-direction:column;gap:2px;border-top:2px solid var(--ink);padding-top:10px;min-width:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:7px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.row .k{font-size:.92rem;color:var(--ink-2)}
+.row .v{font-family:var(--f-data);font-variant-numeric:tabular-nums;font-size:.98rem;text-align:right;font-weight:500}
+.row .n{grid-column:1 / -1;font-size:.8rem;color:var(--ink-3)}
+.chip{display:inline-block;font:700 .95rem var(--f-display);letter-spacing:.07em;text-transform:uppercase;padding:3px 10px;border-radius:4px}
+.chip.none{background:var(--st-none-soft);color:var(--st-none)}
+.chip.short{background:var(--st-short-soft);color:var(--st-short)}
+.chip.long{background:var(--st-long-soft);color:var(--st-long)}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 36px}
+.rules div{display:flex;flex-direction:column;gap:6px;min-width:0;border-top:1px solid var(--ink-3);padding-top:10px}
+.rules p{color:var(--ink-2)}
+
+/* charts */
+.fig{display:flex;flex-direction:column;gap:10px;min-width:0}
+.fig p{color:var(--ink-2);max-width:68ch}
+.plot{position:relative;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:10px 6px 4px}
+.plot svg{display:block;max-width:100%}
+.ptitle{font:600 .82rem var(--f-display);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding:0 6px 4px}
+.ax{font:400 11px var(--f-data);fill:var(--ink-3)}
+.axt{font:600 11.5px var(--f-display);letter-spacing:.08em;text-transform:uppercase;fill:var(--ink-3)}
+.dl{font:600 12.5px var(--f-display);letter-spacing:.04em;fill:var(--ink)}
+.dls{font:400 11px var(--f-data);fill:var(--ink-2)}
+.grid{stroke:var(--rule);stroke-width:1}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.85rem;color:var(--ink-2)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+
+/* two-column working sections */
+.work{display:grid;gap:22px 36px;grid-template-columns:minmax(0,340px) minmax(0,1fr);align-items:start}
+.ledger{border-top:2px solid var(--ink);min-width:0}
+.ledger .row .v{font-size:1.02rem}
+.finding{background:var(--accent-soft);color:var(--ink);padding:12px 14px;border-radius:6px;max-width:80ch}
+.finding strong{font-weight:600}
+.strip{display:flex;flex-direction:column;gap:4px}
+.strip .bar{height:16px;border-radius:3px;background:var(--st-long-soft);position:relative;overflow:hidden}
+.strip .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);min-width:2px}
+.strip .cap{display:flex;justify-content:space-between;font:400 .78rem var(--f-data);color:var(--ink-3)}
+.supply{display:flex;flex-direction:column;gap:2px;border-top:2px solid var(--ink)}
+.sup{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule)}
+.sup .k{font-size:.92rem;color:var(--ink-2)}
+.sup .track{height:10px;background:var(--rule);border-radius:2px;overflow:hidden}
+.sup .track i{display:block;height:100%;background:var(--st-short);min-width:2px}
+.sup.over .track i{background:var(--st-none)}
+.sup .v{font:500 .95rem var(--f-data);font-variant-numeric:tabular-nums;text-align:right;min-width:9ch}
+.sup.over .v{color:var(--st-none)}
+.sup .n{grid-column:1 / -1;font-size:.8rem;color:var(--ink-3)}
+
+/* ladder */
+#ladder{display:flex;flex-direction:column;padding:0 6px 6px}
+.lrow{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr) 11ch;gap:2px 12px;align-items:center;padding:5px 0;border-bottom:1px solid var(--rule)}
+.lrow .k{font-size:.9rem;color:var(--ink-2)}
+.lrow .v{font:500 .85rem var(--f-data);font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+.lrow .track{position:relative;height:18px;background-image:linear-gradient(to right,var(--rule) 1px,transparent 1px);background-size:calc(100% / 6) 100%;border-right:1px solid var(--rule)}
+.lrow .track i{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--panel)}
+.lrow.you .k,.lrow.you .v{color:var(--accent);font-weight:600}
+.lrow.axis .track{height:auto;background:none;border:0;display:flex;justify-content:space-between;font:400 10.5px var(--f-data);color:var(--ink-3)}
+.lrow.axis .track span{width:0;display:flex;justify-content:center;white-space:nowrap}
+.lrow.axis .track span:first-child{justify-content:flex-start}
+.lrow.axis .track span:last-child{justify-content:flex-end}
+@media (max-width:700px){.lrow{grid-template-columns:minmax(0,1fr) 11ch}.lrow .track{grid-column:1 / -1;grid-row:2}.lrow.axis .k,.lrow.axis .v{display:none}}
+
+/* register */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.reg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.item{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid var(--rule);min-width:0}
+.item .meta{font:400 .78rem var(--f-data);color:var(--ink-3)}
+.item p{color:var(--ink-2);font-size:.95rem}
+.item .src{font-size:.82rem;color:var(--ink-3)}
+.cat{font:700 .74rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+
+.tests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 32px}
+.test{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--ink-3);padding-top:10px;min-width:0}
+.test p{color:var(--ink-2);font-size:.95rem}
+.test .pred{font-family:var(--f-data);font-size:.85rem;color:var(--ink);background:var(--accent-soft);padding:6px 8px;border-radius:4px}
+.qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}
+.qa div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.qa h3{color:var(--accent)}
+.qa p{color:var(--ink-2)}
+footer{border-top:1px solid var(--rule);padding-top:16px;font-size:.85rem;color:var(--ink-3);display:flex;flex-direction:column;gap:8px;max-width:95ch}
+footer a{word-break:break-word}
+
+@media (max-width:860px){
+  .explorer,.work,.rules,.qa,.reg{grid-template-columns:minmax(0,1fr)}
+  .tests{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #skyWrap{height:320px}
+}
+@media (max-width:560px){
+  .tests{grid-template-columns:minmax(0,1fr)}
+  .sup{grid-template-columns:minmax(0,1fr) auto}
+  .sup .track{grid-column:1 / -1;grid-row:2}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>What's in the Trail?</h1>
+      <p class="lede">Why one aircraft draws a line across the whole sky and the next leaves nothing. What it would take to spray from airliners, counted in gallons, trucks, mines and people. And which programs really do put material in the air. Every number here can be changed or checked.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Units">
+      <button type="button" id="uUS" aria-pressed="true">US units</button>
+      <button type="button" id="uSI" aria-pressed="false">Metric</button>
+    </div>
+  </header>
+
+  <section>
+    <h2>Fly through the sky</h2>
+    <p class="sec-lede">This is a slice of sky <span id="sceneLen">190 miles</span> long, seen from the side. The pale patches are pockets of air that hold more water vapour than ice can sit in balance with. Forecasters call them ice-supersaturated regions. They are clear air, invisible until an aircraft flies through one. Move the amber aircraft up or down, by dragging it or with the slider, and watch what its trail does.</p>
+    <div class="scene">
+      <div id="skyWrap"><canvas id="sky" role="img" aria-label="Side view of two aircraft crossing a sky with humid pockets. Trails last inside the pockets and fade outside them."></canvas></div>
+      <div class="scene-bar">
+        <div class="seg" role="group" aria-label="Sky today">
+          <button type="button" id="pPatchy" aria-pressed="true">Patchy humid layer</button>
+          <button type="button" id="pDeck" aria-pressed="false">Deep humid layer</button>
+          <button type="button" id="pDry" aria-pressed="false">Dry aloft</button>
+        </div>
+        <button type="button" class="btn" id="btnReveal" aria-pressed="true">Hide the air</button>
+        <button type="button" class="btn" id="btnPlay" aria-pressed="true">Pause</button>
+      </div>
+      <span class="scale-note">Heights are stretched 15 to 50 times, depending on your screen, so the layers can be seen. Time runs 60 times faster than real. Where a trail starts, stops and lasts is computed from the temperature and humidity at that spot. How long the short trails are drawn is approximate.</span>
+    </div>
+
+    <div class="explorer">
+      <div class="ctrl">
+        <div class="slider"><label for="altRange"><span>Amber aircraft cruising at</span><span class="num" id="altVal"></span></label><input type="range" id="altRange" min="24000" max="43000" step="500" value="35000"></div>
+        <div class="slider"><label for="dtRange"><span>Today's air is</span><span class="num" id="dtVal"></span></label><input type="range" id="dtRange" min="-12" max="12" step="1" value="0"><span class="hint">Compared with the standard atmosphere pilots use.</span></div>
+        <div class="slider"><span class="lab" id="engLab">Engines</span>
+          <div class="seg" role="group" aria-labelledby="engLab">
+            <button type="button" id="e1" aria-pressed="false">1960s jet</button>
+            <button type="button" id="e2" aria-pressed="false">1990s fleet</button>
+            <button type="button" id="e3" aria-pressed="true">Modern high-bypass</button>
+          </div>
+          <span class="hint" id="engHint"></span>
+        </div>
+        <div class="hud" aria-live="off">
+          <span class="lab">Where the amber aircraft is right now</span>
+          <div class="row"><span class="k">Outside air</span><span class="v" id="hT"></span></div>
+          <div class="row"><span class="k">Humidity, measured against ice</span><span class="v" id="hRH"></span></div>
+          <div class="row"><span class="k">A trail forms if the air is colder than</span><span class="v" id="hThr"></span><span class="n" id="hThrN"></span></div>
+          <div class="row"><span class="k">Result</span><span class="v"><span class="chip long" id="hVerdict">Lasting trail</span></span><span class="n" id="hWhy"></span></div>
+          <div class="row"><span class="k">White aircraft, <span id="bAlt"></span></span><span class="v"><span class="chip short" id="bVerdict">Short trail</span></span></div>
+        </div>
+      </div>
+      <div class="fig">
+        <h3>Two readings decide it: temperature and humidity</h3>
+        <p>The chart is the rule the scene above follows, drawn for the amber aircraft's height. Cold enough and a trail starts. Humid enough and it stays. The dot is the amber aircraft, and it moves as the aircraft flies in and out of a pocket.</p>
+        <div class="plot" id="phasePlot"><div class="ptitle">Humidity against ice, % &nbsp;/&nbsp; outside air temperature</div></div>
+      </div>
+    </div>
+
+    <div class="rules">
+      <div><h3>Cold enough to start</h3><p>Burning jet fuel makes water: about one gallon of water for each gallon of fuel. The exhaust leaves hot and wet, and as it mixes with the cold air behind the engine it can pass through fog conditions for a moment, the way breath does on a winter morning. The droplets freeze almost at once. That needs air colder than roughly −40 to −50°, and the two temperature scales meet at −40. The exact line shifts with pressure, humidity and engine efficiency. The rule was worked out by Schmidt in 1941 and Appleman in 1953.</p></div>
+      <div><h3>Humid enough to stay</h3><p>Once the ice crystals exist they either shrink or grow. Below 100% humidity against ice they turn back to vapour in seconds to a few minutes, and the trail is a short tail. Above 100% they pull water out of the surrounding air, grow and spread into a band. Trails tracked by satellite last 3.7 hours on average, and one was followed for 18. Airliners on North Atlantic routes were measured spending about 14% of cruise time inside such pockets, which average roughly 560 m (1,800 ft) deep. That is why a trail can stop and restart, and why two aircraft a few thousand feet apart can leave different trails.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A lasting trail is mostly water that was already there</h2>
+    <p class="sec-lede">This applies to the long trails that spread. The engine supplies the first ice crystals. In a humid pocket those crystals keep growing on vapour the air was already carrying. Aircraft that have flown through such trails with instruments found far more ice than the engines put out: more than a hundred times as much in the IPCC's 1999 aviation report, about ten thousand times in Knollenberg's 1972 paper. Set the size of the trail and compare.</p>
+    <div class="work">
+      <div class="ctrl">
+        <div class="slider"><label for="wRange"><span>Trail has spread to a width of</span><span class="num" id="wVal"></span></label><input type="range" id="wRange" min="0" max="100" step="1" value="65"><span class="hint">Measured: about 160 m after one minute, several km after an hour, 5 to 10 km after two hours.</span></div>
+        <div class="slider"><label for="iwcRange"><span>Ice in each cubic metre of trail</span><span class="num" id="iwcVal"></span></label><input type="range" id="iwcRange" min="1" max="20" step="1" value="5"><span class="hint">Measured in mid-latitude trails: about 5 mg, under 20 mg.</span></div>
+        <span class="scale-note">Depth is held at 300 m (measured: 200 to 400 m). Engine output is for a Boeing 737-800 at cruise: about 2,500 kg of fuel an hour at 450 knots, and 1.23 kg of water for each kg of fuel.</span>
+      </div>
+      <div class="ctrl">
+        <div class="ledger">
+          <div class="row"><span class="k" id="mIceK">Ice in one mile of trail</span><span class="v" id="mIce"></span></div>
+          <div class="row"><span class="k" id="mEngK">Water the engines put into that mile</span><span class="v" id="mEng"></span></div>
+          <div class="row"><span class="k">Share of the trail that came from the surrounding air</span><span class="v" id="mShare"></span></div>
+          <div class="row"><span class="k">A 737-800 loaded with nothing but spray could lay this trail for</span><span class="v" id="mRange"></span><span class="n">Maximum structural payload 44,700 lb (20,276 kg), with no passengers or bags.</span></div>
+        </div>
+        <div class="strip" aria-hidden="true">
+          <div class="bar"><i id="mBar"></i></div>
+          <div class="cap"><span id="mBarL">0</span><span id="mBarR">100 miles of trail</span></div>
+        </div>
+        <p class="finding" id="mFinding"></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cost out a spray program</h2>
+    <p class="sec-lede">Suppose something is being added anyway. Liquid has to be made, hauled, stored and loaded, and nothing in the bulk liquid business moves without tanks, trucks, paperwork and people. Set the size of the program and read the ledger. The opening numbers are the cautious case from Randy Barnhill's paper, <a href="https://randybarnhill.substack.com/p/the-chemtrail-conspiracy">The Chemtrail Conspiracy</a>: one flight in a hundred, 200 gallons each.</p>
+    <div class="work">
+      <div class="ctrl">
+        <div class="slider"><label for="shareRange"><span>Share of the world's flights that spray</span><span class="num" id="shareVal"></span></label><input type="range" id="shareRange" min="0" max="300" step="1" value="100"><span class="hint">About 24% of flights leave a lasting trail somewhere along the route (2019 model of every flight). If you think it is one country, read this as that country's flights. The totals shrink with it and the per-flight numbers stay the same.</span></div>
+        <div class="slider"><label for="galRange"><span>Liquid carried per flight</span><span class="num" id="galVal"></span></label><input type="range" id="galRange" min="0" max="240" step="1" value="100"></div>
+        <div class="slider"><label for="strRange"><span>Active ingredient in the mix</span><span class="num" id="strVal"></span></label><input type="range" id="strRange" min="1" max="100" step="1" value="10"><span class="hint">Cloud seeders burn a 2% silver iodide solution.</span></div>
+      </div>
+      <div class="ctrl">
+        <div class="ledger">
+          <div class="row"><span class="k">Flights spraying each day</span><span class="v" id="lFlights"></span><span class="n">Of about 106,600 scheduled flights a day worldwide (IATA, 2025).</span></div>
+          <div class="row"><span class="k">Aircraft fitted with tanks, pumps and nozzles</span><span class="v" id="lAircraft"></span><span class="n">An airliner flies about 3.5 flights a day.</span></div>
+          <div class="row"><span class="k">Liquid moved each day</span><span class="v" id="lDay"></span></div>
+          <div class="row"><span class="k">Liquid moved each year</span><span class="v" id="lYear"></span><span class="n" id="lYearN"></span></div>
+          <div class="row"><span class="k">Highway tanker loads each day</span><span class="v" id="lTrucks"></span><span class="n" id="lTrucksN"></span></div>
+          <div class="row"><span class="k">Compared with all the herbicide sprayed in Vietnam, 1962 to 1971</span><span class="v" id="lRanch"></span><span class="n" id="lRanchN"></span></div>
+          <div class="row"><span class="k">Payload given up on each flight</span><span class="v" id="lPayload"></span></div>
+        </div>
+        <p class="finding" id="lFinding"></p>
+      </div>
+    </div>
+
+    <h3>Can the mines supply it?</h3>
+    <p class="sec-lede">The metals named most often are aluminium, barium and strontium. Silver iodide is what real cloud seeding uses, and sulfur is what climate studies propose. Each bar is the program's yearly need as a share of everything the world produces in a year.</p>
+    <div class="supply" id="supply"></div>
+    <p class="finding" id="sFinding"></p>
+  </section>
+
+  <section>
+    <h2>Count who would have to know</h2>
+    <p class="sec-lede">A tank on an aircraft is seen by the crews who fly it, the mechanics who open its panels and the people who fill it. Set how many people each piece of the program involves. The chart uses a published estimate of how fast secrets leak, fitted to three that did: the NSA's PRISM program, the Tuskegee study and the FBI forensics scandal.</p>
+    <div class="work">
+      <div class="ctrl">
+        <div class="slider"><label for="ppaRange"><span>People per fitted aircraft who would see the equipment</span><span class="num" id="ppaVal"></span></label><input type="range" id="ppaRange" min="1" max="30" step="1" value="10"><span class="hint">Opening guess: two flight crews, a few mechanics, the loaders.</span></div>
+        <div class="slider"><label for="pptRange"><span>People per daily tanker load</span><span class="num" id="pptVal"></span></label><input type="range" id="pptRange" min="1" max="30" step="1" value="10"><span class="hint">Drivers, terminal operators, plant workers, dispatch, inspectors.</span></div>
+        <div class="slider"><label for="coreRange"><span>Planners, chemists, managers, officials</span><span class="num" id="coreVal"></span></label><input type="range" id="coreRange" min="0" max="5000" step="50" value="500"></div>
+        <div class="ledger">
+          <div class="row"><span class="k">People who know</span><span class="v" id="pN"></span></div>
+          <div class="row"><span class="k" id="pOddsK">Odds it has leaked by now</span><span class="v" id="pOdds"></span></div>
+          <div class="row"><span class="k">Even odds of a leak after</span><span class="v" id="pT50"></span></div>
+          <div class="row"><span class="k" id="pMaxK">Most people who could keep it this long</span><span class="v" id="pMax"></span><span class="n">With leak odds held under 5%.</span></div>
+        </div>
+      </div>
+      <div class="fig">
+        <div class="plot" id="leakPlot"><div class="ptitle">Years a secret lasts &nbsp;/&nbsp; people who know it</div></div>
+        <div class="legend"><span><i class="sw" style="background:var(--accent)"></i>Your program today</span><span>Solid line: even odds of a leak. Dashed: 95%.</span><span><i class="sw" style="background:var(--ink-3)"></i>Real secrets, as Grimes counted them</span></div>
+        <p class="finding" id="pFinding"></p>
+        <p class="scale-note">The model is from Grimes (2016). It assumes each person has the same small yearly chance of exposing the secret, 4 in a million, which is the most favourable rate the three cases gave. The FBI case came out far sooner than the model allows for 500 people. It is a rough guide fitted to three cases, and it has been criticised in print for that. Read it as an order of magnitude.</p>
+        <p class="scale-note">Some real secrets did last decades. Operation Sea-Spray stayed hidden for 26 years and the zinc cadmium sulfide tests for about 40. Each was a short run of tests by a small unit, and then it stopped. A spray program would have to run every day, at civil airports, with a workforce that keeps turning over.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What is real</h2>
+    <p class="sec-lede">People do put material into the air on purpose, and governments have done it in secret. Everything listed here is on the record, and the record shows how big each program was and how it came out. The chart lines them up by weight, with your program from the ledger above among them.</p>
+    <div class="fig">
+      <div class="plot"><div class="ptitle">Material released. Each gridline is 100 times the one before.</div><div id="ladder"></div></div>
+      <div class="legend"><span><i class="sw" style="background:var(--st-long)"></i>Released on purpose</span><span><i class="sw" style="background:var(--st-short)"></i>Side effect or natural</span><span><i class="sw" style="background:var(--s3)"></i>Proposed in a study, never done</span><span><i class="sw" style="background:var(--accent)"></i>Your program, per year</span></div>
+    </div>
+    <div class="chips seg" role="group" aria-label="Filter the record" id="regChips"></div>
+    <div class="reg" id="reg"></div>
+  </section>
+
+  <section>
+    <h2>Check it yourself</h2>
+    <p class="sec-lede">The first three show that how a trail looks, whether long, short or broken, is set by the air it was laid in. That makes the look of a trail no evidence of spraying either way. The last three are records anyone can read. Whether something is being added is the question the ledger answers.</p>
+    <div class="tests">
+      <div class="test"><h3>Read the balloon data on a trail day</h3><p>The National Weather Service normally launches balloons twice a day from about 90 sites and publishes every reading. The University of Wyoming's sounding archive lists them by station. Find the rows between 30,000 and 40,000 ft (300 to 200 hPa).</p><p class="pred">Predicted: on days with long spreading trails, a layer up there reads moist. Balloon humidity is given against liquid water, so ice saturation shows as about 68% at −40 °C, 62% at −50 °C and 58% at −60 °C. On short-trail days the whole band reads well below that. Balloon sensors tend to read dry in very cold air, so a reading a little under these values still counts.</p></div>
+      <div class="test"><h3>Look up the aircraft</h3><p>Open a flight tracking app when two aircraft are overhead, one with a long trail and one without. Tap each and note its altitude.</p><p class="pred">Predicted: they are at different heights, often 2,000 ft or more apart, or one is climbing or descending, or they are miles apart in different air. On a standard day no jet leaves a trail below roughly 30,000 ft. On a cold winter day trails form several thousand feet lower.</p></div>
+      <div class="test"><h3>Watch a gap</h3><p>Find a trail with a clean break in it. Watch the break for a few minutes, then watch the next aircraft on the same track.</p><p class="pred">Predicted: the gap drifts with the wind at that height along with the rest of the trail, and the next aircraft at that height shows a gap in the same patch of air. The gap belongs to the air.</p></div>
+      <div class="test"><h3>Test rainwater the way a lab would</h3><p>If you send a sample out, ask for silicon and iron as well as aluminium, barium and strontium. Use the lab's own bottle. In one survey 15 of 28 deposition scientists said a glass jar with a metal lid would contaminate the sample.</p><p class="pred">Predicted: in an unfiltered sample, aluminium far above barium, by tens to hundreds of times, with silicon and iron alongside. That is the mix in ordinary soil dust. Earth's crust is 8.2% aluminium, 425 ppm barium and 370 ppm strontium.</p></div>
+      <div class="test"><h3>Read the weather modification filings</h3><p>Since 1972 anyone who modifies weather in the United States must report it to NOAA, and NOAA posts the filings in its library. Search for your state.</p><p class="pred">Predicted: winter cloud seeding in western mountain states, hail and rain projects in Texas and North Dakota, each naming the sponsor, the target area and the grams of seeding agent. Nine states had active programs in 2024.</p></div>
+      <div class="test"><h3>Find the old photographs</h3><p>Search archives for bomber formations over Europe in 1943 and 1944, or read the September 1942 U.S. report on the problem, titled Condensation Trails: Where They Occur and What Can Be Done About Them.</p><p class="pred">Predicted: piston-engine bombers leaving long, spreading trails that cover the sky, more than fifty years before the word chemtrail. The first trail on record was seen in 1915.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fair questions, with numbers</h2>
+    <div class="qa">
+      <div><h3>"I don't remember skies like this when I was a kid"</h3><p>There are 3.5 times as many airline departures as in 1980: 10.7 million then, 37.4 million in 2024. Engines changed too. A more efficient engine puts less heat into its exhaust, so the exhaust reaches fog conditions in slightly warmer air. In a 1999 test a new Airbus A340 and a 1968 Boeing 707 flew side by side, and in one thin band of heights the Airbus left a trail while the Boeing left none. More flights at heights where trails form means more trails.</p></div>
+      <div><h3>"They switch it on and off"</h3><p>A trail that stops and restarts is the commonest piece of evidence offered, and it is what a patchy humid layer produces. Measured from aircraft, these pockets average about 150 km (93 miles) along the flight path, with many far smaller, and about 560 m deep. Aircraft cross their edges constantly.</p></div>
+      <div><h3>"How do you know it's humidity and not a schedule?"</h3><p>Because a humidity forecast predicts where trails will appear. In 2023 American Airlines pilots used such forecasts to climb or descend around the pockets on 22 flights. Satellite images showed 54% less trail per mile than on 22 matched flights that flew as normal. It was a small trial, and larger ones have followed. A forecast of humidity could not steer around a spray schedule.</p></div>
+      <div><h3>"So trails do change the weather"</h3><p>Yes, and that is published science. Lasting trails spread into thin cirrus that traps heat. Estimates of that warming run from somewhat less than to roughly double the effect of all the carbon dioxide aviation has ever emitted, and the uncertainty is wide. About two flights in a hundred cause 80% of it. Jet exhaust also carries soot and sulfur: fuel may hold up to 3,000 ppm sulfur and typically holds about 600.</p></div>
+      <div><h3>"It's in the fuel, so there are no tanks to find"</h3><p>Then the amounts are tiny. Jet fuel is made to a published specification and its approved additives are capped at milligrams per litre. At the 5 mg cap for the static additive, a 737 would put about half an ounce an hour through its engines, and every litre of jet fuel on Earth together would carry about 2,000 t a year. Fuel loaded with 1% of something extra would send 55 lb an hour of it through the filters, the fuel nozzles and the turbine. Engine soot does carry traces of metal from wear and oil, and that is measured and published.</p></div>
+      <div><h3>"The Manhattan Project stayed secret"</h3><p>For about three years, in wartime, with its own towns behind fences. It employed 125,000 people at its peak. Soviet agents were inside it by 1944. It ended with a public announcement, and some 500,000 people had worked on it. The secret tests in the record above stayed hidden for anywhere from 4 years to more than 50. They were small, they ended, and they still came out.</p></div>
+      <div><h3>"Geoengineering is real, they admit it"</h3><p>The research is real and its size is public. The deliberate stratospheric releases on record by mid-2025 add up to roughly 100 kg of sulfur dioxide, nearly all from one two-person company launching weather balloons. The engineering study of a real program calls for a new type of aircraft flying at 65,000 ft, far above airliners, and says it would be easily detectable.</p></div>
+      <div><h3>"Why pass laws against it, then?"</h3><p>Florida banned weather modification and geoengineering in July 2025 and opened a public reporting line. By March 2026 the state had received more than 20,000 complaints and said it had no report or evidence of anyone holding or operating the banned equipment. Florida had no active weather modification licences before the ban either.</p></div>
+      <div><h3>"What would change your mind?"</h3><p>The things every real program left behind: a purchase order, a tank certificate, a load sheet with unexplained weight, a mechanic's photo of plumbing that is not in the manual, or air samples taken inside a trail showing metals far beyond the traces that engine wear and soil dust account for. In a 2016 survey 76 of 77 atmospheric chemists and geochemists said they had seen no such evidence. The one who had cited unusually high barium in a single remote location.</p></div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+/*MODEL-START*/
+const EI_W=1.23, CP=1004, EPS=0.622, QF=43.2e6, FT=0.3048;
+function isa(zm){ // m -> {T K, P Pa}; ICAO standard atmosphere to 20 km
+  if(zm<11000){const T=288.15-0.0065*zm; return {T:T,P:101325*Math.pow(T/288.15,5.25588)};}
+  return {T:216.65,P:22632.06*Math.exp(-(zm-11000)/6341.62)};
+}
+function pIce(T){return Math.exp(9.550426-5723.265/T+3.53068*Math.log(T)-0.00728332*T);}
+function pLiq(T){return Math.exp(54.842763-6763.22/T-4.210*Math.log(T)+0.000367*T+Math.tanh(0.0415*(T-218.8))*(53.878-1331.22/T-9.44523*Math.log(T)+0.014025*T));}
+function slopeG(P,eta){return EI_W*CP*P/(EPS*QF*(1-eta));}
+function tangentT(G){ // temperature where the liquid saturation curve has slope G
+  let lo=190,hi=273; for(let i=0;i<40;i++){const m=(lo+hi)/2; const d=(pLiq(m+0.05)-pLiq(m-0.05))/0.1; if(d<G) lo=m; else hi=m;} return (lo+hi)/2;
+}
+function forms(Ta,P,rhi,eta,TM){ // does the exhaust-air mixing line reach liquid saturation?
+  const G=slopeG(P,eta); if(TM==null) TM=tangentT(G);
+  const ea=Math.min(rhi*pIce(Ta),pLiq(Ta));
+  if(TM<=Ta) return ea>=pLiq(Ta)*0.999999;
+  return ea+G*(TM-Ta)-pLiq(TM)>=0;
+}
+function threshT(P,rhi,eta){ // warmest air temperature (K) that still gives a trail
+  const G=slopeG(P,eta), TM=tangentT(G); let lo=190,hi=TM;
+  for(let i=0;i<40;i++){const m=(lo+hi)/2; if(forms(m,P,rhi,eta,TM)) lo=m; else hi=m;} return (lo+hi)/2;
+}
+function leakOdds(N,years){const P_LEAK=4.09e-6; return 1-Math.exp(-years*(1-Math.pow(1-P_LEAK,N)));}
+function yearsToOdds(N,odds){const P_LEAK=4.09e-6; return -Math.log(1-odds)/(1-Math.pow(1-P_LEAK,N));}
+/*MODEL-END*/
+const $=function(id){return document.getElementById(id);};
+const S={units:'us',altFt:35000,dT:0,preset:'patchy',eta:0.35,reveal:true,playing:true,filter:'all'};
+try{const u=localStorage.getItem('witt-units'); if(u==='si'||u==='us') S.units=u;}catch(e){}
+const REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(REDUCED) S.playing=false;
+
+/* ---------- formatting ---------- */
+function loc(x,d){return x.toLocaleString('en-US',{maximumFractionDigits:d==null?0:d,minimumFractionDigits:0});}
+function sig(x,n){if(x===0) return '0'; const e=Math.floor(Math.log10(Math.abs(x))); const f=Math.pow(10,e-(n||2)+1); const r=Math.round(x/f)*f; return loc(r,Math.max(0,(n||2)-1-e));}
+function big(x){ // 73,000,000 -> "73 million"
+  const a=Math.abs(x); if(a>=1e12) return sig(x/1e12,3)+' trillion'; if(a>=1e9) return sig(x/1e9,3)+' billion'; if(a>=1e6) return sig(x/1e6,3)+' million'; return sig(x,3);}
+function us(){return S.units==='us';}
+function c2f(c){return c*9/5+32;}
+function fT(c){return us()?Math.round(c2f(c))+' °F ('+Math.round(c)+' °C)':loc(c,1)+' °C';}
+function fTs(c){return us()?Math.round(c2f(c))+'°F':Math.round(c)+'°C';}
+function fAlt(ft){return us()?loc(ft)+' ft':loc(ft*FT/1000,1)+' km';}
+function fDist(km,d){return us()?sig(km/1.609344,d||2)+' miles':sig(km,d||2)+' km';}
+function fVol(gal){return us()?big(gal)+' gal':big(gal*3.785411784)+' L';}
+function fMass(kg){if(us()){const lb=kg*2.2046226; return lb>=2e5?big(lb/2000)+' short tons':sig(lb,3)+' lb';} return kg>=1e5?big(kg/1000)+' t':sig(kg,3)+' kg';}
+function fTons(t){return t>=1e6?sig(t/1e6,3)+' million t':t>=1?sig(t,3)+' t':t>=0.001?sig(t*1000,2)+' kg':sig(t*1e6,2)+' g';}
+function pct(x){return x>=10?loc(x,0)+'%':x>=1?loc(x,1)+'%':x>=0.01?loc(x,2)+'%':'under 0.01%';}
+function svg(tag,attrs,parent,text){const e=document.createElementNS('http://www.w3.org/2000/svg',tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; if(parent) parent.appendChild(e); return e;}
+function css(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+
+/* ---------- the sky ---------- */
+const L_KM=300, Z_LO=24000*FT, Z_HI=43000*FT, V_MS=231.5, TLAPSE=60, NREC=300;
+const PRESETS={
+  patchy:{bg:0.45,pk:[{x:52,z:10650,a:40,b:430,p:1.28},{x:158,z:10800,a:34,b:400,p:1.22},{x:258,z:10560,a:38,b:450,p:1.30}],bFt:39000},
+  deck:{bg:0.55,pk:[{x:150,z:10700,a:330,b:900,p:1.30}],bFt:39000},
+  dry:{bg:0.30,pk:[],bFt:39000}};
+function rhiAt(xkm,zm){const pr=PRESETS[S.preset]; let bg=pr.bg; if(zm>11000) bg*=Math.max(0.25,1-(zm-11000)/1500);
+  let r=bg; for(let i=0;i<pr.pk.length;i++){const k=pr.pk[i]; let dx=Math.abs(xkm-k.x); if(k.a<L_KM/2) dx=Math.min(dx,L_KM-dx);
+    const r2=dx*dx/(k.a*k.a)+(zm-k.z)*(zm-k.z)/(k.b*k.b); if(r2<1){const v=bg+(k.p-bg)*Math.pow(1-r2,0.7); if(v>r) r=v;}} return r;}
+function airAt(xkm,zm){const a=isa(zm), T=a.T+S.dT, rhi=rhiAt(xkm,zm); const ok=forms(T,a.P,rhi,S.eta);
+  return {T:T,P:a.P,rhi:rhi,cls:ok?(rhi>=1?2:1):0};}
+function shortLife(rhi){return 25+150*rhi*rhi*rhi;} // seconds, drawn for illustration
+
+const sky=$('sky'), ctx=sky.getContext('2d'); let SW=900, SH=380, DPR=1, fieldBmp=null;
+const planes=[{x:215,dir:1,ft:function(){return S.altFt;},col:'#ffb53d',rec:[]},{x:120,dir:-1,ft:function(){return PRESETS[S.preset].bFt;},col:'#ffffff',rec:[]}];
+let simT=0;
+function yOf(zm){return SH-12-(zm-Z_LO)/(Z_HI-Z_LO)*(SH-24);}
+function zOf(y){return Z_LO+(SH-12-y)/(SH-24)*(Z_HI-Z_LO);}
+function mkRec(i,zm,t){const a=airAt(i+0.5,zm); return {t:t,z:zm,cls:a.cls,life:shortLife(a.rhi)};}
+function seedTrails(){planes.forEach(function(p){const zm=p.ft()*FT; for(let i=0;i<NREC;i++){let d=p.dir>0?(p.x-i-0.5):(i+0.5-p.x); d=((d%L_KM)+L_KM)%L_KM; p.rec[i]=mkRec(i,zm,simT-d*1000/V_MS);}});}
+function reclass(){planes.forEach(function(p){for(let i=0;i<NREC;i++){const r=p.rec[i]; const n=mkRec(i,r.z,r.t); r.cls=n.cls; r.life=n.life;}});}
+function buildField(){const C=150,R=56, off=document.createElement('canvas'); off.width=C; off.height=R; const o=off.getContext('2d'), im=o.createImageData(C,R);
+  for(let j=0;j<R;j++){const zm=zOf((j+0.5)/R*SH); const a=isa(zm), T=a.T+S.dT, TM=tangentT(slopeG(a.P,S.eta));
+    for(let i=0;i<C;i++){const rhi=rhiAt((i+0.5)/C*L_KM,zm); const ok=forms(T,a.P,rhi,S.eta,TM); const k=(j*C+i)*4;
+      if(!ok){im.data[k]=242;im.data[k+1]=128;im.data[k+2]=70;im.data[k+3]=84;}
+      else if(rhi>=1){im.data[k]=255;im.data[k+1]=255;im.data[k+2]=255;im.data[k+3]=Math.min(150,58+300*(rhi-1));}
+      else {im.data[k]=255;im.data[k+1]=255;im.data[k+2]=255;im.data[k+3]=Math.max(0,(rhi-0.6)*70);}}}
+  o.putImageData(im,0,0); fieldBmp=off;}
+function sizeSky(){const w=$('skyWrap'); SW=w.clientWidth; SH=w.clientHeight; DPR=Math.min(2,window.devicePixelRatio||1); sky.width=Math.round(SW*DPR); sky.height=Math.round(SH*DPR);}
+function drawPlane(p){const x=p.x/L_KM*SW, y=yOf(p.ft()*FT), d=p.dir; ctx.save(); ctx.translate(x,y); ctx.scale(d,1); ctx.fillStyle=p.col; ctx.strokeStyle='rgba(8,14,40,.55)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(11,0); ctx.quadraticCurveTo(8,-3,-6,-2.6); ctx.lineTo(-11,-8); ctx.lineTo(-13,-8); ctx.lineTo(-11,-1.5); ctx.lineTo(-12,1.6); ctx.quadraticCurveTo(6,3.2,11,0); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(3,0.5); ctx.lineTo(-5,6); ctx.lineTo(-7.5,6); ctx.lineTo(-3,0.5); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();}
+function drawSky(){ctx.setTransform(DPR,0,0,DPR,0,0);
+  const g=ctx.createLinearGradient(0,0,0,SH); g.addColorStop(0,css('--sky-d')||'#0b1238'); g.addColorStop(0.45,css('--sky-c')||'#17306c'); g.addColorStop(1,css('--sky-b')||'#2f67b3'); ctx.fillStyle=g; ctx.fillRect(0,0,SW,SH);
+  if(S.reveal&&fieldBmp){ctx.imageSmoothingEnabled=true; ctx.drawImage(fieldBmp,0,0,SW,SH);}
+  // height ticks
+  ctx.font='500 11px "IBM Plex Mono",ui-monospace,monospace'; ctx.textBaseline='middle'; ctx.textAlign='left';
+  const ticks=us()?[28000,32000,36000,40000]:[8000/FT,9000/FT,10000/FT,11000/FT,12000/FT,13000/FT];
+  ticks.forEach(function(ft){const y=yOf(ft*FT); ctx.fillStyle='rgba(255,255,255,.16)'; ctx.fillRect(0,Math.round(y),SW,1); ctx.fillStyle='rgba(255,255,255,.78)'; ctx.fillText(us()?loc(ft)+' ft':loc(ft*FT/1000,0)+' km',6,y-8);});
+  if(S.reveal){ctx.font='600 12px "Barlow Condensed","Arial Narrow",sans-serif'; ctx.fillStyle='rgba(255,255,255,.9)';
+    // label the warm floor if it is on screen
+    const bd=bands(); ctx.textAlign='right';
+    if(bd.none){ctx.fillText('NOT COLD ENOUGH FOR A TRAIL AT ANY HEIGHT SHOWN',SW-8,SH/2);}
+    else {if(bd.floor&&bd.floor>Z_LO+400) ctx.fillText(SW>620?'TOO WARM FOR A TRAIL BELOW HERE':'TOO WARM FOR A TRAIL',SW-8,Math.min(SH-10,yOf(bd.floor)+12));
+      if(bd.ceil&&bd.ceil<Z_HI-400) ctx.fillText(SW>620?'THIN AIR NEEDS COLDER THAN THIS: NO TRAIL ABOVE HERE':'NO TRAIL ABOVE HERE',SW-8,Math.max(12,yOf(bd.ceil)-10));}
+    const pk=PRESETS[S.preset].pk; if(pk.length){const k=pk[0]; ctx.textAlign='center'; const wide=SW>620, lx=Math.min(SW-100,Math.max(wide?170:118,(k.a<L_KM/2?k.x:150)/L_KM*SW)); ctx.fillText(wide?'HUMID POCKET: ICE GROWS HERE':'HUMID POCKET',lx,yOf(k.z+k.b*0.72)-9);}}
+  // trails
+  const cw=SW/NREC;
+  planes.forEach(function(p){for(let i=0;i<NREC;i++){const r=p.rec[i]; if(!r||r.cls===0) continue; const age=simT-r.t; if(age<0) continue; let al,th;
+      if(r.cls===1){if(age>=r.life) continue; al=0.9*(1-age/r.life); th=2.2;} else {al=Math.max(0.42,0.95-age/4200); th=2.4+Math.min(11,age/130);}
+      const y=yOf(r.z), xa=Math.round(i*cw), xb=Math.round((i+1)*cw); ctx.fillStyle='rgba(255,255,255,'+(al*0.35).toFixed(3)+')'; ctx.fillRect(xa,y-th*0.9,xb-xa,th*1.8);
+      ctx.fillStyle='rgba(255,255,255,'+al.toFixed(3)+')'; ctx.fillRect(xa,y-th/2,xb-xa,th);}});
+  planes.forEach(drawPlane);}
+function bands(){ // where the background air gives no trail: a warm band at the bottom, and sometimes a band at the top
+  const n=96, ok=[]; for(let i=0;i<=n;i++){const z=Z_LO+(Z_HI-Z_LO)*i/n, a=isa(z); ok.push(forms(a.T+S.dT,a.P,PRESETS[S.preset].bg*(z>11000?Math.max(0.25,1-(z-11000)/1500):1),S.eta));}
+  let lo=0; while(lo<=n&&!ok[lo]) lo++; if(lo>n) return {none:true};
+  let hi=n; while(hi>=0&&!ok[hi]) hi--;
+  return {floor:lo>0?Z_LO+(Z_HI-Z_LO)*lo/n:null, ceil:hi<n?Z_LO+(Z_HI-Z_LO)*(hi+1)/n:null};}
+function stepSky(dtWall){const dt=dtWall*TLAPSE; simT+=dt;
+  planes.forEach(function(p){const x0=p.x; p.x+=p.dir*V_MS*dt/1000; const zm=p.ft()*FT; let i0=Math.floor(x0), i1=Math.floor(p.x);
+    if(p.dir>0){for(let i=i0;i<i1;i++) p.rec[((i%NREC)+NREC)%NREC]=mkRec(((i%NREC)+NREC)%NREC,zm,simT);} else {for(let i=i0;i>i1;i--) p.rec[((i%NREC)+NREC)%NREC]=mkRec(((i%NREC)+NREC)%NREC,zm,simT);}
+    p.x=((p.x%L_KM)+L_KM)%L_KM;});}
+
+/* ---------- readout and phase chart ---------- */
+const VERD=[['none','No trail'],['short','Short trail'],['long','Lasting trail']];
+let phase=null;
+function buildPhase(){const box=$('phasePlot'); const old=box.querySelector('svg'); if(old) old.remove();
+  const W=Math.max(280,box.clientWidth-14),H=Math.round(Math.max(250,Math.min(350,W*0.66))),l=44,r=14,t=8,b=38, T0=-72,T1=-30, a=isa(S.altFt*FT);
+  const X=function(c){return l+(c-T0)/(T1-T0)*(W-l-r);}, Y=function(h){return t+(1-h/150)*(H-t-b);};
+  const s=svg('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Chart of humidity against temperature showing where no trail, a short trail or a lasting trail results'},box);
+  const pts=[]; for(let h=0;h<=150;h+=5){pts.push([Math.max(T0,Math.min(T1,threshT(a.P,h/100,S.eta)-273.15)),h]);}
+  const line=pts.map(function(p){return X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1);});
+  const p100=Math.max(T0,Math.min(T1,threshT(a.P,1,S.eta)-273.15));
+  svg('path',{d:'M'+X(T0)+','+Y(0)+' L'+line.filter(function(_,i){return pts[i][1]<=100;}).join(' L')+' L'+X(T0)+','+Y(100)+' Z',fill:'var(--st-short-soft)'},s);
+  svg('path',{d:'M'+X(T0)+','+Y(100)+' L'+line.filter(function(_,i){return pts[i][1]>=100;}).join(' L')+' L'+X(T0)+','+Y(150)+' Z',fill:'var(--st-long-soft)'},s);
+  svg('path',{d:'M'+X(T1)+','+Y(0)+' L'+line.join(' L')+' L'+X(T1)+','+Y(150)+' Z',fill:'var(--st-none-soft)'},s);
+  [0,50,100,150].forEach(function(h){svg('line',{x1:l,x2:W-r,y1:Y(h),y2:Y(h),class:'grid'},s); svg('text',{x:l-6,y:Y(h)+4,'text-anchor':'end',class:'ax'},s,h+'%');});
+  for(let c=-70;c<=-30;c+=10){svg('line',{x1:X(c),x2:X(c),y1:Y(0),y2:Y(0)+5,stroke:'var(--ink-3)'},s); svg('text',{x:X(c),y:Y(0)+18,'text-anchor':'middle',class:'ax'},s,us()?Math.round(c2f(c))+'°F':c+'°C');}
+  svg('text',{x:(l+W-r)/2,y:H-4,'text-anchor':'middle',class:'axt'},s,'Colder  ←  outside air  →  warmer');
+  svg('polyline',{points:line.join(' '),fill:'none',stroke:'var(--ink)','stroke-width':1.5},s);
+  svg('line',{x1:X(T0),x2:X(p100),y1:Y(100),y2:Y(100),stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'5 4'},s);
+  svg('text',{x:X(T0)+10,y:Y(125)+4,class:'dl',fill:'var(--st-long)'},s,'LASTING TRAIL').style.fill='var(--st-long)';
+  svg('text',{x:X(T0)+10,y:Y(50)+4,class:'dl'},s,'SHORT TRAIL').style.fill='var(--st-short)';
+  svg('text',{x:X(T1)-10,y:Y(50)+4,'text-anchor':'end',class:'dl'},s,'NO TRAIL').style.fill='var(--st-none)';
+  svg('text',{x:X(T0)+10,y:Y(100)-6,class:'dls'},s,'ice saturation, 100%');
+  const dA=svg('circle',{r:7,fill:'var(--accent)',stroke:'var(--panel)','stroke-width':2},s);
+  phase={X:X,Y:Y,dA:dA,T0:T0,T1:T1};}
+function setChip(el,cls){el.className='chip '+VERD[cls][0]; el.textContent=VERD[cls][1];}
+function updateHud(){const A=planes[0],B=planes[1]; const a=airAt(A.x,S.altFt*FT), b=airAt(B.x,B.ft()*FT);
+  $('hT').textContent=fT(a.T-273.15); $('hRH').textContent=Math.round(a.rhi*100)+'%';
+  const thr=threshT(a.P,a.rhi,S.eta)-273.15; $('hThr').textContent=fT(thr);
+  $('hThrN').textContent='At this pressure ('+Math.round(a.P/100)+' hPa), this humidity and these engines.';
+  setChip($('hVerdict'),a.cls); setChip($('bVerdict'),b.cls);
+  $('hWhy').textContent=a.cls===0?(S.altFt>36000?'Not cold enough for air this thin. Lower pressure needs colder air, and above about 36,000 ft the standard atmosphere stops getting colder.':'The air is too warm. The exhaust never reaches fog conditions.'):a.cls===1?'Cold enough to form, too dry to last. The ice turns back to vapour.':'Cold enough to form and humid enough for the ice to grow. This one spreads.';
+  if(phase){const cl=function(v,lo,hi){return Math.max(lo,Math.min(hi,v));};
+    phase.dA.setAttribute('cx',phase.X(cl(a.T-273.15,phase.T0,phase.T1))); phase.dA.setAttribute('cy',phase.Y(cl(a.rhi*100,0,150)));
+}}
+function refreshSkyParams(){buildField(); reclass(); buildPhase(); updateHud(); drawSky();}
+function setLabels(){ $('altVal').textContent=fAlt(S.altFt); $('bAlt').textContent=fAlt(PRESETS[S.preset].bFt);
+  const d=S.dT; $('dtVal').textContent=d===0?'standard':(us()?Math.round(Math.abs(d)*1.8)+' °F':Math.abs(d)+' °C')+(d>0?' warmer':' colder');
+  $('engHint').textContent=S.eta<0.25?'About 23% of fuel energy becomes thrust (measured on a 1968 Boeing 707).':S.eta<0.33?'About 30%, the 1992 fleet average.':'About 35%, a large high-bypass turbofan.';
+  $('sceneLen').textContent=us()?'190 miles':'300 km';}
+
+/* ---------- mass of a lasting trail ---------- */
+const ENG_W_KM=2500/(450*1.852)*EI_W, PAYLOAD_KG=20276, DEPTH_M=300;
+function updateMass(){const wkm=0.1*Math.pow(100,+$('wRange').value/100), iwc=+$('iwcRange').value;
+  const iceKm=wkm*1000*DEPTH_M*1000*iwc*1e-6, per=us()?1.609344:1, ratio=iceKm/ENG_W_KM, rangeKm=PAYLOAD_KG/iceKm;
+  $('wVal').textContent=us()?(wkm<1.6?sig(wkm*3280.84,2)+' ft':sig(wkm/1.609344,2)+' miles'):(wkm<1?sig(wkm*1000,2)+' m':sig(wkm,2)+' km');
+  $('iwcVal').textContent=iwc+' mg';
+  $('mIceK').textContent='Ice in one '+(us()?'mile':'km')+' of trail'; $('mEngK').textContent='Water the engines put into that '+(us()?'mile':'km');
+  $('mIce').textContent=fMass(iceKm*per); $('mEng').textContent=fMass(ENG_W_KM*per);
+  $('mShare').textContent=loc(Math.max(0,100*(1-1/ratio)),ratio>100?2:1)+'%';
+  $('mRange').textContent=fDist(rangeKm,2);
+  const span=us()?160.9344:150; $('mBar').style.width=Math.min(100,100*rangeKm/span)+'%'; $('mBarR').textContent=us()?'100 miles of trail':'150 km of trail';
+  $('mBarL').textContent='Amber: how far one full load reaches';
+  $('mFinding').innerHTML='<strong>The engines supplied about 1 part in '+sig(ratio,2)+' of this trail.</strong> A tank would have to supply the rest, and a full load would be gone in '+fDist(rangeKm,2)+'. A fair reply is that a spray would only need to seed the trail. In that case the white band is still ice from the air, and the engine\'s own soot already seeds it. The band cannot tell you whether anything was added. That question goes to the ledger.';}
+
+/* ---------- ledger ---------- */
+const FLIGHTS_DAY=106600, PER_AC=3.5, TRUCK_GAL=6000, RANCH_GAL=19e6, JET_GAL=104e9, PERSIST_SHARE=23.8;
+const MATS=[
+  {k:'Silver iodide',s:'silver',f:0.459,w:26000,n:'Counted as the silver in it. World mine output of silver is 26,000 t a year. Cloud seeding across the US and Canada uses about 3 t of silver iodide a year.'},
+  {k:'Strontium ore (celestite)',s:'strontium ore',f:1,w:450000,n:'World output is 450,000 t a year.'},
+  {k:'Barium ore (barite)',s:'barium ore',f:1,w:8.7e6,n:'World output is 8.7 million t a year.'},
+  {k:'Aluminium oxide (alumina)',s:'aluminium oxide',f:1,w:150e6,n:'World output is 150 million t a year.'},
+  {k:'Sulfur',s:'sulfur',f:1,w:84e6,n:'World output is 84 million t a year.'}];
+let L={};
+function ledger(){const share=0.1*Math.pow(10,+$('shareRange').value/100), gal=20*Math.pow(10,+$('galRange').value/100), str=+$('strRange').value/100;
+  const flights=share/100*FLIGHTS_DAY, galDay=flights*gal, galYear=galDay*365;
+  L={share:share,gal:gal,str:str,flights:flights,aircraft:flights/PER_AC,galDay:galDay,galYear:galYear,tLiquid:galYear*3.785411784/1000,trucks:galDay/TRUCK_GAL};
+  L.tActive=L.tLiquid*str; return L;}
+function updateLedger(){ledger();
+  $('shareVal').textContent=sig(L.share,2)+'%';
+  $('galVal').textContent=us()?sig(L.gal,2)+' gal':sig(L.gal*3.785411784,2)+' L'; $('strVal').textContent=Math.round(L.str*100)+'%';
+  $('lFlights').textContent=L.share>=99.9?loc(FLIGHTS_DAY):sig(L.flights,3); $('lAircraft').textContent=sig(Math.max(1,L.aircraft),3);
+  $('lDay').textContent=fVol(L.galDay); $('lYear').textContent=fVol(L.galYear);
+  $('lYearN').textContent=fTons(L.tLiquid)+' (metric tons) if it weighs the same as water. Airlines burn '+(us()?'104 billion gal':'394 billion L')+' of jet fuel a year. This is '+pct(100*L.galYear/JET_GAL)+' of that.';
+  $('lTrucks').textContent=L.trucks<10?sig(L.trucks,2):sig(L.trucks,3);
+  $('lTrucksN').textContent='At '+(us()?'6,000 gal':'23,000 L')+' a load, about what an 80,000 lb highway rig can legally haul at the weight of water. Each load is weighed, logged and billed.';
+  const rh=L.galYear/RANCH_GAL; $('lRanch').textContent=rh>=1?sig(rh,2)+' times, every year':pct(rh*100)+' of it, every year';
+  $('lRanchN').textContent='Operation Ranch Hand sprayed about '+(us()?'19 million gal':'72 million L')+' in nine years, from aircraft fitted with '+(us()?'1,000-gal':'3,800 L')+' tanks. It left logs of 9,000 missions and a health study of 1,200 crew.';
+  const lb=L.gal*8.345; $('lPayload').textContent=(us()?sig(lb,3)+' lb':sig(lb/2.2046,3)+' kg')+' ('+pct(100*lb/44700)+' of a 737-800)';
+  const jp=100*L.galYear/JET_GAL, vol=jp<1?'By volume it is small, '+pct(jp)+' of the jet fuel airlines burn, so volume alone would not give it away.':'By volume it equals '+pct(jp)+' of all the jet fuel airlines burn.';
+  const fleet='It needs '+sig(Math.max(1,L.aircraft),2)+' aircraft refitted with tanks and '+sig(L.trucks,2)+' tanker loads a day, delivered to airports and pumped aboard by ground crews.';
+  let h;
+  if(L.share<5) h='<strong>This program touches 1 flight in '+sig(100/L.share,2)+'.</strong> About 24 flights in 100 leave a lasting trail, so at most 1 lasting trail in '+sig(PERSIST_SHARE/L.share,2)+' could be a sprayed one. A program this size cannot be why the sky is streaked. '+vol+' The '+sig(Math.max(1,L.aircraft),2)+' refitted aircraft and the people around them are another matter. Slide the share up to cover every trail and watch the trucks.';
+  else if(L.share<PERSIST_SHARE) h='<strong>This program could be behind about 1 lasting trail in '+sig(PERSIST_SHARE/L.share,2)+', not all of them.</strong> '+fleet+' '+vol;
+  else h='<strong>This program is large enough to be behind every lasting trail.</strong> '+fleet+' '+vol+' Each year it moves '+(rh>=1?sig(rh,2)+' times':pct(rh*100)+' of')+' the volume of the whole Vietnam herbicide program.';
+  $('lFinding').innerHTML=h;
+  updateSupply(); updatePeople(); updateLadder();}
+function updateSupply(){const box=$('supply'); box.textContent=''; const over=[],mid=[],low=[];
+  MATS.forEach(function(m){const need=L.tActive*m.f, sh=100*need/m.w; (sh>=100?over:sh>=5?mid:low).push(m.s);
+    const d=document.createElement('div'); d.className='sup'+(sh>=100?' over':'');
+    d.innerHTML='<span class="k"></span><span class="track"><i></i></span><span class="v"></span><span class="n"></span>';
+    d.children[0].textContent=m.k; d.children[1].firstChild.style.width=Math.min(100,sh)+'%';
+    d.children[2].textContent=sh>=100?sig(sh/100,2)+'× world output':pct(sh); d.children[3].textContent='Needs '+fTons(need)+' a year. '+m.n; box.appendChild(d);});
+  const j=function(a){return a.length>1?a.slice(0,-1).join(', ')+' and '+a[a.length-1]:a[0];};
+  let h=''; if(over.length) h+='<strong>The world does not produce enough '+j(over)+' for this.</strong> ';
+  if(mid.length) h+='It would take a share of the world\'s '+j(mid)+' large enough to move the market. ';
+  if(low.length) h+='Supply does not rule out '+j(low)+'. What height rules out is the purpose most often given, dimming the sun. Particles released at airliner height wash out of the air within days to two weeks, while the same particles at 65,000 ft (20 km) stay about a year. That is why every serious proposal starts with a new aircraft that can reach it. For these materials the test is the fleet, the trucks and the people.';
+  $('sFinding').innerHTML=h;}
+
+/* ---------- people ---------- */
+const YEARS=Math.max(1,new Date().getFullYear()-1999); let PPL={N:0};
+const CASES=[{k:'NSA PRISM',s:'PRISM',N:30000,y:6},{k:'Tuskegee study',s:'Tuskegee',N:6700,y:25},{k:'FBI forensics',s:'FBI',N:500,y:6}];
+function updatePeople(){const ppa=+$('ppaRange').value, ppt=+$('pptRange').value, core=+$('coreRange').value;
+  const N=Math.round(Math.max(1,L.aircraft)*ppa+L.trucks*ppt+core); PPL.N=N;
+  $('ppaVal').textContent=ppa; $('pptVal').textContent=ppt; $('coreVal').textContent=loc(core); $('pN').textContent=sig(N,3);
+  const odds=leakOdds(N,YEARS), t50=yearsToOdds(N,0.5);
+  $('pOddsK').textContent='Odds it has leaked in the '+YEARS+' years since 1999'; $('pOdds').textContent=odds>0.995?'over 99%':Math.round(odds*100)+'%';
+  $('pT50').textContent=t50>=200?'over 200 years':t50<1?sig(t50*12,2)+' months':sig(t50,2)+' years';
+  $('pMaxK').textContent='Most people who could keep it for '+YEARS+' years';
+  $('pMax').textContent=loc(Math.floor(Math.log(1-(-Math.log(0.95)/YEARS))/Math.log(1-4.09e-6)));
+  $('pFinding').innerHTML=odds<0.5
+    ?'<strong>A program this small could still be quiet.</strong> The model gives it a '+Math.round(odds*100)+'% chance of having leaked by now. It is also only 1 flight in '+sig(100/L.share,2)+', far too few to explain the trails people photograph. Make it big enough to explain them and the dot crosses the lines.'
+    :'<strong>The model gives '+(odds>0.995?'better than 99%':Math.round(odds*100)+'%')+' odds this would be public by now</strong>, and even odds within '+(t50<1?sig(t50*12,2)+' months':sig(t50,2)+' years')+'. What has not surfaced in '+YEARS+' years is what the real programs listed below all left behind: a part number, a manual page, a load sheet, a shipping paper.';
+  buildLeak();}
+function buildLeak(){const box=$('leakPlot'); const old=box.querySelector('svg'); if(old) old.remove();
+  const W=Math.max(280,box.clientWidth-14),H=Math.round(Math.max(260,Math.min(360,W*0.66))),l=40,r=14,t=10,b=38, N0=10,N1=3e6,Y0=1,Y1=120;
+  const X=function(n){return l+Math.log10(Math.max(N0,Math.min(N1,n))/N0)/Math.log10(N1/N0)*(W-l-r);}, Y=function(y){return t+(1-Math.log10(Math.max(Y0,Math.min(Y1,y))/Y0)/Math.log10(Y1/Y0))*(H-t-b);};
+  const nar=W<430; const s=svg('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Chart of how long a secret lasts against how many people know it'},box);
+  const curve=function(o){const p=[]; for(let e=1;e<=6.5;e+=0.05){const n=Math.pow(10,e), y=yearsToOdds(n,o); if(y>Y1||y<Y0) continue; p.push(X(n).toFixed(1)+','+Y(y).toFixed(1));} return p;};
+  const c50=curve(0.5), c95=curve(0.95);
+  svg('path',{d:'M'+c95.join(' L')+' L'+X(N1)+','+Y(Y1)+' Z',fill:'var(--st-none-soft)'},s);
+  svg('path',{d:'M'+X(N0)+','+Y(Y0)+' L'+X(N0)+','+Y(Y1)+' L'+c50.join(' L')+' L'+X(N1)+','+Y(Y0)+' Z',fill:'var(--st-long-soft)'},s);
+  [1,10,100].forEach(function(y){svg('line',{x1:l,x2:W-r,y1:Y(y),y2:Y(y),class:'grid'},s); svg('text',{x:l-6,y:Y(y)+4,'text-anchor':'end',class:'ax'},s,y+' y');});
+  [[100,'100'],[1000,nar?'':'1,000'],[1e4,'10,000'],[1e5,nar?'':'100,000'],[1e6,'1 million']].forEach(function(n){svg('line',{x1:X(n[0]),x2:X(n[0]),y1:t,y2:H-b,class:'grid'},s); if(n[1]) svg('text',{x:X(n[0]),y:H-b+16,'text-anchor':'middle',class:'ax'},s,n[1]);});
+  svg('text',{x:(l+W-r)/2,y:H-4,'text-anchor':'middle',class:'axt'},s,'People who know');
+  svg('polyline',{points:c50.join(' '),fill:'none',stroke:'var(--ink)','stroke-width':1.5},s);
+  svg('polyline',{points:c95.join(' '),fill:'none',stroke:'var(--ink)','stroke-width':1.5,'stroke-dasharray':'5 4'},s);
+  svg('text',{x:X(N0)+8,y:Y(1.6),class:'dl'},s,nar?'STILL SECRET':'PROBABLY STILL SECRET').style.fill='var(--st-long)';
+  svg('text',{x:X(N1)-8,y:Y(nar?4.5:70),'text-anchor':'end',class:'dl'},s,nar?'OUT':'ALMOST SURELY OUT').style.fill='var(--st-none)';
+  if(!nar){svg('text',{x:X(1800),y:Y(110),class:'dls'},s,'even odds'); svg('text',{x:X(60000),y:Y(yearsToOdds(60000,0.95))-6,class:'dls'},s,'95%');}
+  CASES.forEach(function(c){svg('circle',{cx:X(c.N),cy:Y(c.y),r:5,fill:'var(--ink-3)',stroke:'var(--panel)','stroke-width':1.5},s); svg('text',{x:X(c.N)+8,y:Y(c.y)+(nar&&c.y>20?-8:4),class:'dls'},s,nar?c.s:c.k);});
+  svg('line',{x1:l,x2:W-r,y1:Y(YEARS),y2:Y(YEARS),stroke:'var(--accent)','stroke-width':1,'stroke-dasharray':'2 3'},s);
+  svg('text',{x:nar?l+4:W-r-4,y:Y(YEARS)-5,'text-anchor':nar?'start':'end',class:'dls'},s,nar?YEARS+' y':YEARS+' years since 1999').style.fill='var(--accent)';
+  svg('circle',{cx:X(PPL.N),cy:Y(YEARS),r:7.5,fill:'var(--accent)',stroke:'var(--panel)','stroke-width':2},s);}
+
+/* ---------- ladder ---------- */
+const LAD=[
+  {k:'One UK research balloon, 2022 (sulfur dioxide)',t:0.0004,c:'long'},
+  {k:'One NASA rocket tracer release, 50 miles up or higher',t:0.00045,c:'long'},
+  {k:'A Southern California cloud-seeding season (silver iodide)',t:0.0177,c:'long'},
+  {k:'Every Make Sunsets balloon to mid-2025 (sulfur dioxide)',t:0.09,c:'long'},
+  {k:'All cloud seeding in the US and Canada, per year (silver iodide)',t:3,c:'long'},
+  {k:'UK secret tracer trials, 1953 to 1964, total',t:4.85,c:'long'},
+  {k:'Soot from all jet fuel, per year',t:9450,c:'short'},
+  {k:'Herbicide sprayed in Vietnam, 1962 to 1971, total',t:72000,c:'long'},
+  {k:'Sulfur dioxide from all jet fuel, per year',t:378000,c:'short'},
+  {k:'Stratospheric program as costed in 2018, year 15 (sulfur dioxide)',t:3e6,c:'prop'},
+  {k:'Sulfur oxides removed by the 2020 ship fuel rule, per year',t:8.5e6,c:'short'},
+  {k:'Mount Pinatubo eruption, 1991 (sulfur dioxide)',t:17e6,c:'short'}];
+const LCOL={long:'var(--st-long)',short:'var(--st-short)',prop:'var(--s3)',you:'var(--accent)'};
+function updateLadder(){const box=$('ladder'); box.textContent=''; const lo=-4,hi=8;
+  const rows=LAD.concat([{k:'Your program from the ledger, per year: all the liquid',t:L.tLiquid,c:'you'},{k:'Your program from the ledger, per year: active ingredient',t:L.tActive,c:'you'}]).sort(function(a,b){return a.t-b.t;});
+  const ax=document.createElement('div'); ax.className='lrow axis'; ax.innerHTML='<span class="k"></span><span class="track"><span>100 g</span><span>10 kg</span><span>1 t</span><span>100 t</span><span>10,000 t</span><span>1 Mt</span><span>100 Mt</span></span><span class="v"></span>'; box.appendChild(ax);
+  rows.forEach(function(r){const d=document.createElement('div'); d.className='lrow'+(r.c==='you'?' you':''); d.innerHTML='<span class="k"></span><span class="track"><i></i></span><span class="v"></span>';
+    d.children[0].textContent=r.k; const f=Math.max(0,Math.min(1,(Math.log10(r.t)-lo)/(hi-lo))); const dot=d.children[1].firstChild; dot.style.left=(f*100)+'%'; dot.style.background=LCOL[r.c];
+    d.children[2].textContent=fTons(r.t); box.appendChild(d);});}
+
+/* ---------- the record ---------- */
+const CATS=[['all','All'],['seed','Weather modification'],['secret','Secret tests, later exposed'],['geo','Geoengineering research'],['side','Other releases and side effects'],['exhibit','Often cited as proof'],['law','Law since 2024']];
+const REG=[
+['seed','Cloud seeding today','Nine US states, more than 50 countries · ongoing','Aircraft flares and ground burners release silver iodide into winter storm clouds so that more of the cloud falls as snow. A ground burner puts out 5 to 25 grams an hour. Measured gains run from 0 to 20%. Water agencies, power companies and ski areas pay for it.','U.S. Government Accountability Office, 2024','https://www.gao.gov/products/gao-25-107328'],
+['seed','Who pays for it','Utah, Idaho, Alberta, the UAE, China','Utah budgeted nearly $16 million in 2025 and runs 190 remote burners to build snowpack. Idaho spends about $4 million a year, much of it from Idaho Power, which seeds to fill its hydro reservoirs. Insurance companies in Alberta have paid for hail suppression flights since 1996. The UAE flies nearly 300 salt-flare missions a year. China has the largest program, with a target area of 5.5 million km².','Fox 13 Utah','https://www.fox13now.com/news/colorado-river-collaborative/utah-now-runs-the-worlds-largest-remote-controlled-cloud-seeding-program',[['Idaho Water Resource Board','https://idwr.idaho.gov/wp-content/uploads/sites/2/iwrb/CloudSeeding/CS-FAQ-sheet.-Mar-2023.pdf'],['Globe and Mail','https://www.theglobeandmail.com/canada/alberta/article-how-albertas-hail-suppression-project-helps-manage-severe-weather/'],['Al Arabiya','https://english.alarabiya.net/News/gulf/2024/01/18/UAE-to-carry-out-hundreds-of-cloud-seeding-missions-in-2024-to-tackle-water-scarcity'],['State Council of China','https://english.www.gov.cn/policies/latestreleases/202012/02/content_WS5fc76218c6d0f7257694125e.html']]],
+['seed','Public filings since 1972','Weather Modification Reporting Act','Operators must notify NOAA before they start and report the type and quantity of agent when they finish. The rule already covers releasing aerosols to change sunlight. NOAA posts the filings online.','NOAA Central Library','https://library.noaa.gov/weather-climate/weather-modification-project-reports'],
+['seed','Operation Popeye','US Air Force · 1967 to 1972 · Laos, Vietnam, Cambodia','Crews seeded monsoon clouds with silver iodide and lead iodide to wash out the Ho Chi Minh Trail. It stayed secret for about four years, until newspaper reports in 1971 and 1972. It led to the treaty that bans hostile weather modification.','U.S. State Department, Office of the Historian','https://history.state.gov/historicaldocuments/frus1964-68v28/d274'],
+['seed','Project Cirrus and Project Stormfury','1947, and 1962 to 1983','In 1947 a B-17 dropped about 180 lb of dry ice into a hurricane off Florida. The storm then turned west and hit Savannah. The Weather Bureau showed that earlier storms had made the same turn unaided. Stormfury later seeded four hurricanes and was dropped when the changes proved to match what hurricanes do unaided.','NOAA Hurricane Research Division','https://www.aoml.noaa.gov/hrd/hrd_sub/sfury.html'],
+['secret','Operation Sea-Spray','US Navy and Army · September 1950 · San Francisco','A ship sprayed two kinds of bacteria, believed harmless, into the fog to see how far a germ attack would spread. Nearly all 800,000 residents breathed them. Eleven people were treated for a rare infection and one died. A court later found the link unproven. The test stayed secret for 26 years.','PBS American Experience','https://www.pbs.org/wgbh/americanexperience/features/general-article/weapon-secret-testing'],
+['secret','Zinc cadmium sulfide tests','US Army Chemical Corps · 1950s and 1960s · 33 places in the US and Canada','A fluorescent powder was released from aircraft, rooftops and cars to trace how particles drift. Operation LAC in 1957 and 1958 flew release lines across the country east of the Rockies. In St. Louis the blowers ran in poor, mostly Black neighbourhoods, and officials were told it was a smoke-screen test. The purpose became public in the 1990s. A 1997 National Research Council review judged the doses too small to cause harm and noted that records were incomplete.','National Research Council, 1997','https://www.ncbi.nlm.nih.gov/books/NBK233502/'],
+['secret','New York subway test','US Army · 1966','Light bulbs filled with a bacterium believed harmless were broken on the tracks so that trains would carry it through the tunnels. Made public in 1977.','PBS American Experience','https://www.pbs.org/wgbh/americanexperience/features/general-article/weapon-secret-testing'],
+['secret','British germ warfare trials','Ministry of Defence, Porton Down · 1940 to 1979','More than 100 covert trials. They included zinc cadmium sulfide released from aircraft and ships, up to about 4,850 kg between 1953 and 1964, and bacteria sprayed off the south coast past a million people. Public from the 1990s, with a full account in 2002.','Academy of Medical Sciences, 1999','https://acmedsci.ac.uk/file-download/34958-ZincCadm.pdf',[['The Observer, 2002','https://dn720302.ca.archive.org/0/items/galatic-service/Millions-were-in-germ-war-tests-_-The-Guardian.pdf']]],
+['geo','Harvard SCoPEx','2017 to 2024','Planned to release a kilogram or two of chalk dust from a balloon and measure what it did. A 2021 test flight in Sweden was cancelled after objections. The project closed in March 2024 without releasing anything.','MIT Technology Review','https://www.technologyreview.com/2024/03/18/1089879/harvard-halts-its-long-planned-atmospheric-geoengineering-experiment/'],
+['geo','Make Sunsets','Two-person US company · since 2022','Sells cooling credits and launches weather balloons carrying under 2 kg of sulfur dioxide each. Mexico moved to ban such tests in 2023. The EPA demanded its records in April 2025. The company had reported releasing about 0.1 ton in all.','U.S. Environmental Protection Agency','https://www.epa.gov/geoengineering/government-action'],
+['geo','The SATAN balloon','United Kingdom · September 2022','An independent researcher released about 400 grams of sulfur dioxide at 24 km (79,000 ft), with flight permits. It was reported six months later.','MIT Technology Review','https://www.technologyreview.com/2023/03/01/1069283/researchers-launched-a-solar-geoengineering-test-flight-in-the-uk-last-fall/'],
+['geo','Cloud brightening in Alameda','University of Washington · spring 2024','Sea-salt mist was sprayed from the deck of a museum aircraft carrier to test a nozzle, each run under three minutes. The city council voted to end it in June 2024.','Alameda Post','https://alamedapost.com/news/council-votes-unanimously-end-climate-experiment/'],
+['geo','UK ARIA programme','£56.8 million · announced May 2025','Funds five small outdoor experiments. The only one under way by early 2026 pumps seawater onto Arctic sea ice. A planned balloon test would expose milligrams of mineral dust at height and bring it back down.','Advanced Research and Invention Agency','https://aria.org.uk/opportunity-spaces/future-proofing-our-climate-and-weather/exploring-climate-cooling/faqs',[['Arctic project update','https://aria.org.uk/insights-1/re-thickening-arctic-sea-ice-project-update-january-2026']]],
+['geo','Stardust Solutions','Israeli-US company · $75 million raised by late 2025','Developing a reflective particle and a delivery system to sell to governments. No release into the open air was found on record as of mid-2026.','E&E News','https://www.eenews.net/articles/global-cooling-startup-raises-60m-to-test-sun-reflecting-technology/'],
+['geo','What a real program would take','Smith and Wagner, 2018','Engineers costed a 15-year stratospheric program. No existing aircraft can do the job. It needs a new type with a 55 m wingspan flying at 20 km (65,000 ft), growing to 95 aircraft and 60,000 flights a year carrying 3 million t of sulfur dioxide. Their verdict on secrecy: easily detectable.','Environmental Research Letters','https://iopscience.iop.org/article/10.1088/1748-9326/aae98d'],
+['side','Crop dusting','United States · every growing season','About 3,400 pilots treat 127 million acres of cropland a year, flying as low as 10 ft. This is aircraft spraying that anyone can watch from the road.','National Agricultural Aviation Association','https://www.agaviation.org/about/about-ag-aviation/industry-facts/'],
+['side','Operation Ranch Hand','US Air Force · 1962 to 1971 · Vietnam','About 19 million gal of herbicide, 12 million of it Agent Orange, sprayed from cargo aircraft in nearly 20,000 sorties. It is the largest aerial spray program on record, and it left tapes logging 9,000 missions.','U.S. Department of Veterans Affairs','https://www.publichealth.va.gov/exposures/agentorange/basics.asp',[['National Academies, 2006','https://www.nationalacademies.org/read/11590/chapter/4']]],
+['side','What jet exhaust does contain','Every flight','Water, carbon dioxide, nitrogen oxides, a little soot and the sulfur that was in the fuel. At typical fuel sulfur that is about 1.2 g of sulfur dioxide for each kg of fuel, some 380,000 t a year across all flights. The lasting trails trap heat.','Lee and others, Atmospheric Environment, 2021','https://www.sciencedirect.com/science/article/pii/S1352231020305689'],
+['side','Metal traces in engine soot','Zurich Airport test cell · 2016','Soot particles sampled straight behind a running engine carried traces of metal. Chromium, iron, molybdenum, sodium, calcium and aluminium were the most common, and barium was among those also detected. The candidates were the fuel, the lubricating oil and wear of engine parts. So a trace of aluminium or barium in exhaust is expected from an ordinary engine.','Abegglen and others, Atmospheric Environment, 2016','https://www.sciencedirect.com/science/article/pii/S1352231016302424'],
+['side','Military chaff','Air forces · training and combat','Aircraft release bundles of aluminium-coated glass fibre, thinner than a hair, to confuse radar. The clouds can show on weather radar. A review for the Defense Department in 1998 judged the effects on people, farms and the environment negligible and asked for more research.','U.S. Government Accountability Office, 1998','https://www.gao.gov/products/nsiad-98-219'],
+['side','NASA rocket tracers','Sounding rockets · 50 to 250 miles up','Research rockets release about a pound of barium, lithium or an aluminium compound far above the weather, 50 to 250 miles up, so cameras can follow the glowing cloud and map high-altitude winds. Launches are announced. Meteors deliver 100 to 200 tons of metal to the same region every day.','NASA','https://www.nasa.gov/mission_pages/sounding-rockets/tracers/index.html'],
+['side','Mosquito control','Aircraft at low level · announced locally','Planes and helicopters spray insecticide over towns and marshes. For naled the rate is 1 to 2 tablespoons per acre, over about 16 million acres a year in the mainland United States.','U.S. Environmental Protection Agency','https://www.epa.gov/mosquitocontrol/naled-mosquito-control'],
+['side','The ship fuel rule of 2020','International Maritime Organization','Ship exhaust used to brighten ocean clouds by accident. Cutting fuel sulfur from 3.5% to 0.5% was expected to remove 8.5 million t of sulfur oxides a year, and researchers are measuring the warming that followed.','International Maritime Organization','https://www.imo.org/en/mediacentre/pressbriefings/pages/34-imo-2020-sulphur-limit-.aspx'],
+['side','Metal from falling satellites','NOAA · 2023','High-altitude sampling found that about 10% of sulfuric acid particles in the stratosphere hold aluminium and other metals in the ratios of spacecraft alloys. It is what is left of rockets and satellites that burned up on re-entry.','Murphy and others, PNAS, 2023','https://www.pnas.org/doi/abs/10.1073/pnas.2313374120'],
+['exhibit','Barrels in an airliner cabin','Flight testing','Test aircraft carry water tanks in place of seats. Pumping water between them shifts the weight so engineers can check how the aircraft handles at each loading.','Full Fact','https://fullfact.org/online/chemtrails-photographs-planes/'],
+['exhibit','Patent 5,003,186','Hughes Aircraft · issued 1991 · expired','Proposes seeding the upper air with metal oxide particles to shed heat, possibly by way of jet fuel. A patent records an idea. It is no record that anyone built or flew it.','Google Patents','https://patents.google.com/patent/US5003186A/en'],
+['exhibit','Pond, filter and snow samples','Tests cited since 2008','Shown the best-known results, 82 to 89% of the deposition scientists surveyed said ordinary sources explained them. Aluminium is 8% of the Earth\'s crust, so any sample holding dust or mud reads high.','Shearer and others, Environmental Research Letters, 2016','https://iopscience.iop.org/article/10.1088/1748-9326/11/8/084011'],
+['exhibit','Owning the Weather in 2025','US Air University · 1996','A research paper by officers at a staff college, imagining battlefield weather control in 2025. Its ideas include aircraft spreading carbon dust to trigger rain. It presents them as future possibilities, its disclaimer says it is not Air Force policy, and the word contrail does not appear in it.','Defense Technical Information Center','https://apps.dtic.mil/sti/tr/pdf/ADA333462.pdf'],
+['exhibit','Barium in a jet fuel additive','Stadis 450','The additive keeps static charge from building up in fuel. The fuel specification caps it at 5 mg per litre. Its data sheet describes it as ashless and non-metallic. The claim mixes up one ingredient with its barium salt, which the additive does not contain.','Product data sheet','https://www.biobor.com/wp-content/uploads/2025/07/Stadis450PDS.pdf',[['Jet A-1 specification sheet','https://www.tupras.com.tr/assets/img/article/newsletters/tupras-jet-yakiti-jet-a1-urun-spesifikasyonu.pdf']]],
+['exhibit','Fuel dumping','Emergencies and overweight returns','Some large aircraft can jettison fuel to get down to landing weight. Controllers keep them at least 2,000 ft above the highest obstacle and broadcast a warning every three minutes.','Federal Aviation Administration','https://www.faa.gov/air_traffic/publications/atpubs/atc_html/chap9_section_4.html'],
+['law','Florida','SB 56 · in force July 2025','Bans releasing anything into the air to affect temperature, weather, climate or sunlight, with up to five years in prison and a $100,000 fine. Airports report monthly. After more than 20,000 public complaints, the state said in March 2026 that it had received no evidence of anyone holding or operating banned equipment.','WOKV News','https://www.wokv.com/news/local/dep-fields-20000-complaints-about-alleged-weather-modification-finds-no-evidence-violations/346TROGQXVGV5EF3MRKYMQBDHA/'],
+['law','Tennessee and Louisiana','2024 and 2025','Tennessee passed the first such ban. Louisiana followed, and in 2026 added burning fuel in an aircraft engine to its list of ways to disperse. Bills have been introduced in at least 34 states.','SRM360','https://srm360.org/perspective/proposals-to-ban-geoengineering-us-states-lose-steam/'],
+['law','EPA contrail pages','July 2025','The EPA published pages on contrails and geoengineering. They say the federal government is not aware of any contrail ever formed over the United States on purpose to change the weather or climate.','U.S. Environmental Protection Agency','https://www.epa.gov/contrails'],
+['law','House hearing','16 September 2025','A House subcommittee chaired by Rep. Marjorie Taylor Greene heard three witnesses on weather control. One testified that there is no record of geoengineering being implemented anywhere in the world.','U.S. Government Publishing Office','https://www.govinfo.gov/content/pkg/CHRG-119hhrg61720/html/CHRG-119hhrg61720.htm']];
+function buildReg(){const chips=$('regChips'); chips.textContent='';
+  CATS.forEach(function(c){const n=c[0]==='all'?REG.length:REG.filter(function(r){return r[0]===c[0];}).length; const b=document.createElement('button'); b.type='button'; b.id='f_'+c[0]; b.textContent=c[1]+' '+n; b.setAttribute('aria-pressed',String(S.filter===c[0]));
+    b.addEventListener('click',function(){S.filter=c[0]; buildReg();}); chips.appendChild(b);});
+  const box=$('reg'); box.textContent=''; const names={}; CATS.forEach(function(c){names[c[0]]=c[1];});
+  REG.filter(function(r){return S.filter==='all'||r[0]===S.filter;}).forEach(function(r){const d=document.createElement('div'); d.className='item';
+    d.innerHTML='<span class="cat"></span><h3></h3><span class="meta"></span><p></p><span class="src"></span>';
+    d.children[0].textContent=names[r[0]]; d.children[1].textContent=r[1]; d.children[2].textContent=r[2]; d.children[3].textContent=r[3];
+    const src=d.children[4]; src.appendChild(document.createTextNode(r[6]?'Sources: ':'Source: '));
+    [[r[4],r[5]]].concat(r[6]||[]).forEach(function(p,i){if(i) src.appendChild(document.createTextNode(' · ')); const a=document.createElement('a'); a.textContent=p[0]; a.href=p[1]; a.target='_blank'; a.rel='noopener'; src.appendChild(a);}); box.appendChild(d);});}
+
+/* ---------- footer ---------- */
+function buildFoot(){const A=function(t,u){return '<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';};
+  $('foot').innerHTML=[
+  '<span>Trail physics: the Schmidt-Appleman criterion as set out by '+A('Schumann (1996, 2000)','https://elib.dlr.de/9247/1/aerscitech-2000.pdf')+', with 1.23 kg of water per kg of fuel, 43.2 MJ/kg fuel energy, saturation pressures from Murphy and Koop (2005) and the ICAO standard atmosphere. A trail lasts where humidity against ice is 100% or more ('+A('NASA Langley','https://www-pm.larc.nasa.gov/site/doc-library/208-Minnis.CONTRAILS.Ed2.pdf')+'). The pockets in the scene are drawn for illustration, about 50 km long and 570 m deep. Measured from aircraft, the mean path length is 150 km ('+A('Gierens and Spichtinger 2000','https://angeo.copernicus.org/articles/18/499/2000/')+', who note that aircraft sampling favours the large ones) and the mean depth is 560 m (Spichtinger and others 2003). Trail lifetimes: '+A('Gierens and Vázquez-Navarro 2018','https://elib.dlr.de/121762/1/Gierens-V-Navarro_MetZetVol_27_No_3_p183-193.pdf')+'.</span>',
+  '<span>Trail water: '+A('Knollenberg 1972','https://ui.adsabs.harvard.edu/abs/1972JAtS...29.1367K/abstract')+'; '+A('IPCC, Aviation and the Global Atmosphere, 1999','https://archive.ipcc.ch/ipccreports/sres/aviation/index.php?idp=38')+'; '+A('Schumann and others 2017','https://acp.copernicus.org/articles/17/403/2017/acp-17-403-2017.pdf')+'. Aircraft weights from Boeing airport planning data. Fuel burn derived from the ICAO carbon calculator method.</span>',
+  '<span>Ledger: flights, fleet and fuel from '+A('IATA, June 2026','https://www.iata.org/en/iata-repository/publications/economic-reports/global-outlook-for-air-transport-june-2026/')+'. Share of flights with lasting trails, and the roughly 2% that cause most of the warming, from '+A('Teoh and others 2024','https://acp.copernicus.org/articles/24/6071/2024/')+'. World production from the '+A('USGS Mineral Commodity Summaries 2026','https://pubs.usgs.gov/periodicals/mcs2026/')+' (2025 estimates). Liquid is counted at the weight of water as a round figure. A slurry of metal oxide would be heavier and a solvent lighter. Tanker loads are 6,000 gal, about the legal payload of an 80,000 lb highway rig at that weight. Particle lifetimes at height from the IPCC 1999 report. Contrail warming estimates: '+A('Lee and others 2021','https://www.sciencedirect.com/science/article/pii/S1352231020305689')+' and Teoh 2024. Contrail avoidance trial: '+A('Sonabend and others 2024','https://www.nature.com/articles/s44172-024-00329-7')+'. Engine test: '+A('Schumann, Busen and Plohr 2000','https://elib.dlr.de/9281/1/AIAA-2715-2000.pdf')+'.</span>',
+  '<span>Secrecy model: '+A('Grimes 2016, PLOS ONE','https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0147905')+', with its '+A('published correction','https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0151003')+'. For a critique see Hagen, Do Conspiracies Tend to Fail?, Episteme, 2023. Expert survey: '+A('Shearer, West, Caldeira and Davis 2016','https://iopscience.iop.org/article/10.1088/1748-9326/11/8/084011')+'. Manhattan Project: '+A('U.S. Department of Energy','https://www.osti.gov/opennet/manhattan-project-history/Events/1942-1945/espionage.htm')+'. Balloon data: '+A('University of Wyoming soundings','https://weather.uwyo.edu/upperair/sounding_legacy.html')+'. Wartime report: '+A('NACA, 1942','https://ntrs.nasa.gov/api/citations/19930093080/downloads/19930093080.pdf')+'.</span>',
+  '<span>Figures checked October 2026. A companion to '+A('The Chemtrail Conspiracy','https://randybarnhill.substack.com/p/the-chemtrail-conspiracy')+' by Randy Barnhill. See also '+A('Sea Level to Space','https://claude.ai/artifact/FASemsew4TJUsyyNTzhTaJ')+' and '+A('Overhead Now','https://claude.ai/artifact/D3bcSL4V9tMnJvrqjs5yyC')+'.</span>'].join('');}
+
+/* ---------- wiring ---------- */
+function press(ids,on){ids.forEach(function(id){$(id).setAttribute('aria-pressed',String(id===on));});}
+function setUnits(u){S.units=u; try{localStorage.setItem('witt-units',u);}catch(e){} press(['uUS','uSI'],u==='us'?'uUS':'uSI'); setLabels(); buildPhase(); updateHud(); updateMass(); updateLedger(); drawSky();}
+$('uUS').addEventListener('click',function(){setUnits('us');}); $('uSI').addEventListener('click',function(){setUnits('si');});
+[['pPatchy','patchy'],['pDeck','deck'],['pDry','dry']].forEach(function(p){$(p[0]).addEventListener('click',function(){S.preset=p[1]; press(['pPatchy','pDeck','pDry'],p[0]); setLabels(); refreshSkyParams();});});
+[['e1',0.23],['e2',0.30],['e3',0.35]].forEach(function(p){$(p[0]).addEventListener('click',function(){S.eta=p[1]; press(['e1','e2','e3'],p[0]); setLabels(); refreshSkyParams();});});
+$('btnReveal').addEventListener('click',function(){S.reveal=!S.reveal; this.setAttribute('aria-pressed',String(S.reveal)); this.textContent=S.reveal?'Hide the air':'Show the air'; drawSky();});
+$('btnPlay').addEventListener('click',function(){S.playing=!S.playing; this.setAttribute('aria-pressed',String(S.playing)); this.textContent=S.playing?'Pause':'Play'; last=0;});
+function setAlt(ft){S.altFt=Math.max(24000,Math.min(43000,Math.round(ft/500)*500)); $('altRange').value=S.altFt; setLabels(); buildPhase(); updateHud(); if(!S.playing){planes[0].rec.forEach(function(r,i){/* keep old trail */}); drawSky();}}
+$('altRange').addEventListener('input',function(){setAlt(+this.value);});
+$('dtRange').addEventListener('input',function(){S.dT=+this.value; setLabels(); refreshSkyParams();});
+['wRange','iwcRange'].forEach(function(id){$(id).addEventListener('input',updateMass);});
+['shareRange','galRange','strRange'].forEach(function(id){$(id).addEventListener('input',updateLedger);});
+['ppaRange','pptRange','coreRange'].forEach(function(id){$(id).addEventListener('input',updatePeople);});
+let dragging=false;
+function dragTo(e){const r=sky.getBoundingClientRect(); setAlt(zOf(e.clientY-r.top)/FT);}
+sky.addEventListener('pointerdown',function(e){if(e.pointerType==='touch') return; dragging=true; sky.setPointerCapture(e.pointerId); dragTo(e);});
+sky.addEventListener('pointermove',function(e){if(dragging) dragTo(e);});
+sky.addEventListener('pointerup',function(){dragging=false;}); sky.addEventListener('pointercancel',function(){dragging=false;});
+
+/* ---------- boot ---------- */
+let last=0, hudT=0, lastW=0;
+function frame(ts){if(S.playing){if(last){stepSky(Math.min(0.05,(ts-last)/1000));} last=ts; drawSky(); if(ts-hudT>180){hudT=ts; updateHud();}} else {last=0;} requestAnimationFrame(frame);}
+function layout(){const w=$('skyWrap').clientWidth; if(Math.abs(w-lastW)<2) return; lastW=w; sizeSky(); buildField(); drawSky(); buildPhase(); updateHud(); buildLeak();}
+press(['uUS','uSI'],us()?'uUS':'uSI'); if(!S.playing){$('btnPlay').setAttribute('aria-pressed','false'); $('btnPlay').textContent='Play';}
+$('btnReveal').textContent='Hide the air';
+if(window.innerWidth<700) S.filter='seed';
+setLabels(); sizeSky(); lastW=$('skyWrap').clientWidth; buildField(); seedTrails(); buildPhase(); updateHud(); drawSky();
+updateMass(); updateLedger(); buildReg(); buildFoot();
+if(window.ResizeObserver){new ResizeObserver(layout).observe($('skyWrap'));} else {window.addEventListener('resize',layout);}
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){drawSky();});}
+requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>
