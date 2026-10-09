@@ -9,10 +9,10 @@ A companion to [The Chemtrail Conspiracy](https://randybarnhill.substack.com/p/t
 - **Fly through the sky**: a side-on slice of sky with humid pockets (ice-supersaturated regions). Move an aircraft up and down and its trail starts, stops and lasts according to the temperature and humidity at each spot. Settings for the day's temperature, the kind of sky and the engine generation.
 - **Temperature and humidity chart**: the rule the scene follows, with regions for no trail, a short trail and a lasting trail.
 - **Trail water**: how much ice a lasting trail holds per mile against what the engines put out, and how far a full payload of spray would reach.
-- **Spray program ledger**: share of flights, gallons per flight and mix strength give aircraft refitted, tanker loads, yearly volume and the share of world mine output needed for silver iodide, strontium, barium, alumina and sulfur.
+- **Spray program ledger**: share of flights, gallons per flight and mix strength give aircraft refitted, tanker loads, yearly volume and the share of world mine output needed for silver iodide, strontium, lithium, barium, alumina and sulfur.
 - **Who would have to know**: a headcount fed into a published model of how fast secrets leak.
 - **What is real**: about 35 documented entries, each with a source: cloud seeding, Operation Popeye, the secret dispersal tests of the 1950s and 60s, geoengineering research, everyday spraying, items often cited as proof, and state and federal law since 2024. A chart ranks them by tonnage against the program set in the ledger.
-- **Check it yourself**: six tests anyone can run. **Fair questions**: nine short answers with numbers.
+- **Check it yourself**: six tests anyone can run. **Fair questions**: eleven short answers with numbers.
 - US and metric units, light and dark themes.
 
 ## Model and sources
