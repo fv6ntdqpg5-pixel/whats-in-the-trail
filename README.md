@@ -7,6 +7,7 @@ A companion to [The Chemtrail Conspiracy](https://randybarnhill.substack.com/p/t
 ## What is on the page
 
 - **Fly through the sky**: a side-on slice of sky with humid pockets (ice-supersaturated regions). Move an aircraft up and down and its trail starts, stops and lasts according to the temperature and humidity at each spot. Settings for the day's temperature, the kind of sky and the engine generation.
+- **Look up from the ground**: a GPU-rendered (WebGL 2) sky seen from below the middle of the same slice, with the same two aircraft, pockets and settings. Each piece of trail forms, fades or spreads by the same rule as the side view. A hatched overlay shows the humid air you cannot see in a real sky, a time-of-day choice shows trails lit after ground sunset, and plain yes/no readouts say whether each aircraft is cold enough to make ice and humid enough to keep it.
 - **Temperature and humidity chart**: the rule the scene follows, with regions for no trail, a short trail and a lasting trail.
 - **Trail water**: how much ice a lasting trail holds per mile against what the engines put out, and how far a full payload of spray would reach.
 - **Spray program ledger**: share of flights, gallons per flight and mix strength give aircraft refitted, tanker loads, yearly volume and the share of world mine output needed for silver iodide, strontium, lithium, barium, alumina and sulfur.
@@ -22,6 +23,8 @@ A companion to [The Chemtrail Conspiracy](https://randybarnhill.substack.com/p/t
 - **Trail water**: ice content and trail dimensions from Schumann and others (2017) and the IPCC aviation report (1999). Boeing 737-800 payload and an approximate cruise fuel burn of 2,500 kg an hour.
 - **Ledger**: IATA flight, fleet and fuel figures (June 2026). Share of flights with lasting trails from Teoh and others (2024). World production from the USGS Mineral Commodity Summaries 2026. Liquid is counted at the weight of water as a round figure, with 6,000 gal tanker loads.
 - **Secrecy**: Grimes (2016), with the most favourable leak rate from his three cases. It is a rough model and has been criticised in print. The page says so.
+
+- **Ground-view sky**: single scattering by air molecules and haze with standard coefficients, sunlight dimmed along its path to each point. Heights are true to scale; time runs 20 times faster than real. The widening of lasting trails (60 m a minute) and the texture of old trails are approximate.
 
 Full source links are in the page footer and beside each entry in the record.
 
@@ -39,3 +42,7 @@ Static site. On Vercel: import this repository, framework preset "Other", no bui
 ## Corrections
 
 Figures were checked in October 2026. If a number or a link is wrong, open an issue with a source.
+
+## Copyright
+
+© 2026 Randy Barnhill. All rights reserved. See `LICENSE`. Built with AI (Claude), steered by Randy Barnhill.

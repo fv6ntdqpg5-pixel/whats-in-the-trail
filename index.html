@@ -90,6 +90,24 @@ header.top .lede{max-width:60ch;color:var(--ink-2);margin-top:10px}
 .rules div{display:flex;flex-direction:column;gap:6px;min-width:0;border-top:1px solid var(--ink-3);padding-top:10px}
 .rules p{color:var(--ink-2)}
 
+/* view from the ground */
+.ground{display:flex;flex-direction:column;gap:12px;min-width:0;border-top:1px solid var(--rule);padding-top:22px}
+.ground .sec-lede{max-width:68ch}
+#gWrap{position:relative;border-radius:6px;overflow:hidden;height:420px;background:#0b1426;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+#gWrap:active{cursor:grabbing}
+#gsky{display:block;width:100%;height:100%}
+.gtag{position:absolute;left:0;top:0;transform:translate(-50%,-160%);font:700 .8rem var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:3px;pointer-events:none;white-space:nowrap;color:#10202f;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.gtag.a{background:#ffb53d}
+.gtag.b{background:#ffffff}
+.gkey{position:absolute;left:10px;bottom:10px;right:10px;font:500 .78rem var(--f-data);color:#eef3f8;text-shadow:0 1px 2px rgba(0,0,0,.7);pointer-events:none;display:flex;gap:8px;align-items:center}
+.gkey i{display:inline-block;width:22px;height:12px;border:1px solid rgba(255,255,255,.7);background:repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 2px,transparent 2px 6px);flex:none}
+.ghint{position:absolute;right:10px;top:10px;font:500 .74rem var(--f-data);color:rgba(238,243,248,.8);text-shadow:0 1px 2px rgba(0,0,0,.7);pointer-events:none}
+.gnogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#eef3f8}
+.gread{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 36px}
+.gread .hud .row .v{white-space:nowrap}
+@media (max-width:860px){#gWrap{height:340px}}
+@media (max-width:620px){.gread{grid-template-columns:minmax(0,1fr)}}
+
 /* charts */
 .fig{display:flex;flex-direction:column;gap:10px;min-width:0}
 .fig p{color:var(--ink-2);max-width:68ch}
@@ -171,6 +189,7 @@ footer a{word-break:break-word}
 </style>
 </head>
 <body>
+
 <div class="wrap">
   <header class="top">
     <div>
@@ -196,8 +215,46 @@ footer a{word-break:break-word}
         </div>
         <button type="button" class="btn" id="btnReveal" aria-pressed="true">Hide the air</button>
         <button type="button" class="btn" id="btnPlay" aria-pressed="true">Pause</button>
+        <a class="btn" href="#ground" style="text-decoration:none">See it from the ground ↓</a>
       </div>
       <span class="scale-note">Heights are stretched 15 to 50 times, depending on your screen, so the layers can be seen. Time runs 60 times faster than real. Where a trail starts, stops and lasts is computed from the temperature and humidity at that spot. How long the short trails are drawn is approximate.</span>
+    </div>
+
+    <div class="ground" id="ground">
+      <h3>Now look up from the ground</h3>
+      <p class="sec-lede">The same sky, the same two aircraft and the same humid pocket, seen the way you would see them standing under the middle of the slice. In real life the humid air is invisible. Switch it on to see where it is, then switch it off and look at the sky the way everyone else does. Drag sideways to look around.</p>
+      <div id="gWrap">
+        <canvas id="gsky" role="img" aria-label="The sky seen from the ground, with the amber and white aircraft crossing overhead and their trails forming, fading or spreading"></canvas>
+        <span class="gtag a" id="gTagA" hidden>Amber</span><span class="gtag b" id="gTagB" hidden>White</span>
+        <span class="ghint">Drag to look around</span>
+        <div class="gkey" id="gKey"><i></i><span>Humid air at each aircraft's height. You cannot see this in a real sky.</span></div>
+        <div class="gnogl" id="gNoGL" hidden>This browser could not draw the ground view. The side view above shows the same thing.</div>
+      </div>
+      <div class="scene-bar">
+        <button type="button" class="btn" id="gReveal" aria-pressed="true">Hide the humid air</button>
+        <div class="seg" role="group" aria-label="Time of day">
+          <button type="button" id="gNoon" aria-pressed="false">Midday</button>
+          <button type="button" id="gLate" aria-pressed="true">Late afternoon</button>
+          <button type="button" id="gDusk" aria-pressed="false">Dusk</button>
+        </div>
+        <button type="button" class="btn" id="gAgain">New flight</button>
+      </div>
+      <div class="gread">
+        <div class="hud">
+          <span class="lab">Amber aircraft, <span id="gAltA"></span>, right now</span>
+          <div class="row"><span class="k">Cold enough to make ice?</span><span class="v" id="gColdA"></span></div>
+          <div class="row"><span class="k">Humid enough to keep it?</span><span class="v" id="gWetA"></span></div>
+          <div class="row"><span class="k">What you see</span><span class="v"><span class="chip" id="gResA"></span></span></div>
+        </div>
+        <div class="hud">
+          <span class="lab">White aircraft, <span id="gAltB"></span>, right now</span>
+          <div class="row"><span class="k">Cold enough to make ice?</span><span class="v" id="gColdB"></span></div>
+          <div class="row"><span class="k">Humid enough to keep it?</span><span class="v" id="gWetB"></span></div>
+          <div class="row"><span class="k">What you see</span><span class="v"><span class="chip" id="gResB"></span></span></div>
+        </div>
+      </div>
+      <p class="finding" id="gFinding"></p>
+      <span class="scale-note">Drawn on your phone's graphics chip. The sky colour comes from sunlight scattering through a modelled atmosphere, and each piece of trail is lit by the sun as seen from its own height, so at dusk the trails can glow while the ground is dark. Heights are true to scale here. Time runs 20 times faster than real. Where each trail forms, fades or spreads uses the same rule and the same air as the side view. How fast a lasting trail widens (60 m a minute) and the texture of old trails are approximate.</span>
     </div>
 
     <div class="explorer">
@@ -685,7 +742,9 @@ function buildFoot(){const A=function(t,u){return '<a href="'+u+'" target="_blan
   '<span>Trail water: '+A('Knollenberg 1972','https://ui.adsabs.harvard.edu/abs/1972JAtS...29.1367K/abstract')+'; '+A('IPCC, Aviation and the Global Atmosphere, 1999','https://archive.ipcc.ch/ipccreports/sres/aviation/index.php?idp=38')+'; '+A('Schumann and others 2017','https://acp.copernicus.org/articles/17/403/2017/acp-17-403-2017.pdf')+'. Aircraft weights from Boeing airport planning data. Fuel burn derived from the ICAO carbon calculator method.</span>',
   '<span>Ledger: flights, fleet and fuel from '+A('IATA, June 2026','https://www.iata.org/en/iata-repository/publications/economic-reports/global-outlook-for-air-transport-june-2026/')+'. Share of flights with lasting trails, and the roughly 2% that cause most of the warming, from '+A('Teoh and others 2024','https://acp.copernicus.org/articles/24/6071/2024/')+'. World production from the '+A('USGS Mineral Commodity Summaries 2026','https://pubs.usgs.gov/periodicals/mcs2026/')+' (2025 estimates). Liquid is counted at the weight of water as a round figure. A slurry of metal oxide would be heavier and a solvent lighter. Tanker loads are 6,000 gal, about the legal payload of an 80,000 lb highway rig at that weight. Particle lifetimes at height from the IPCC 1999 report. Contrail warming estimates: '+A('Lee and others 2021','https://www.sciencedirect.com/science/article/pii/S1352231020305689')+' and Teoh 2024. Contrail avoidance trial: '+A('Sonabend and others 2024','https://www.nature.com/articles/s44172-024-00329-7')+'. Engine test: '+A('Schumann, Busen and Plohr 2000','https://elib.dlr.de/9281/1/AIAA-2715-2000.pdf')+'.</span>',
   '<span>Secrecy model: '+A('Grimes 2016, PLOS ONE','https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0147905')+', with its '+A('published correction','https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0151003')+'. For a critique see Hagen, Do Conspiracies Tend to Fail?, Episteme, 2023. Expert survey: '+A('Shearer, West, Caldeira and Davis 2016','https://iopscience.iop.org/article/10.1088/1748-9326/11/8/084011')+'. Manhattan Project: '+A('U.S. Department of Energy','https://www.osti.gov/opennet/manhattan-project-history/Events/1942-1945/espionage.htm')+'. Balloon data: '+A('University of Wyoming soundings','https://weather.uwyo.edu/upperair/sounding_legacy.html')+'. Wartime report: '+A('NACA, 1942','https://ntrs.nasa.gov/api/citations/19930093080/downloads/19930093080.pdf')+'.</span>',
-  '<span>Figures checked October 2026. A companion to '+A('The Chemtrail Conspiracy','https://randybarnhill.substack.com/p/the-chemtrail-conspiracy')+' by Randy Barnhill. See also '+A('Sea Level to Space','https://claude.ai/artifact/FASemsew4TJUsyyNTzhTaJ')+' and '+A('Overhead Now','https://claude.ai/artifact/D3bcSL4V9tMnJvrqjs5yyC')+'.</span>'].join('');}
+  '<span>Figures checked October 2026. A companion to '+A('The Chemtrail Conspiracy','https://randybarnhill.substack.com/p/the-chemtrail-conspiracy')+' by Randy Barnhill. See also '+A('Sea Level to Space','https://claude.ai/artifact/FASemsew4TJUsyyNTzhTaJ')+' and '+A('Overhead Now','https://claude.ai/artifact/D3bcSL4V9tMnJvrqjs5yyC')+'.</span>',
+  '<span>Ground-view sky lighting: single scattering by air molecules and haze, using standard textbook coefficients.</span>',
+  '<span>© 2026 Randy Barnhill. All rights reserved. Built with AI (Claude), steered by Randy Barnhill, engineering technician.</span>'].join('');}
 
 /* ---------- wiring ---------- */
 function press(ids,on){ids.forEach(function(id){$(id).setAttribute('aria-pressed',String(id===on));});}
@@ -707,6 +766,225 @@ sky.addEventListener('pointerdown',function(e){if(e.pointerType==='touch') retur
 sky.addEventListener('pointermove',function(e){if(dragging) dragTo(e);});
 sky.addEventListener('pointerup',function(){dragging=false;}); sky.addEventListener('pointercancel',function(){dragging=false;});
 
+/* ---------- the view from the ground ----------
+   Same air as the side view: the ground camera stands under the middle of the slice and both aircraft fly
+   parallel tracks along it. Each piece of trail is classed by airAt() at the spot it was laid, exactly as above. */
+const GV=V_MS, GXE=62000, GREC=9, GMAX=64, GLAT=[9000,15000], GDIR=[1,-1], GWIND=12, GTLAPSE=20;
+const GXC={patchy:158,deck:150,dry:150};
+const GSUN={noon:45,late:12,dusk:-3};
+const G={reveal:true,sun:'late',simT:0,trails:[[],[]],passEnd:null,sig:'',yaw:0.1,pitch:0.6,ok:false,visible:false,last:0,hudT:0};
+function gAlt(k){return (k===0?S.altFt:PRESETS[S.preset].bFt)*FT;}
+function gX(k){return GDIR[k]*(-GXE+GV*G.simT);}
+function gKm(xw){return (((GXC[S.preset]+xw/1000)%L_KM)+L_KM)%L_KM;}
+function gAir(k,xw){return airAt(gKm(xw),gAlt(k));}
+function gFlying(){return GV*G.simT<2*GXE;}
+function gNew(){G.simT=0;G.trails=[[],[]];G.passEnd=null;}
+function gReclass(){for(let k=0;k<2;k++) G.trails[k].forEach(function(p){const a=gAir(k,p.x); p.cls=a.cls; p.life=shortLife(a.rhi);}); gSummary();}
+function gSig(){return [S.altFt,S.dT,S.preset,S.eta,S.units].join('|');}
+function gStep(dt){G.simT+=dt;
+  if(gFlying()){for(let k=0;k<2;k++){const tr=G.trails[k];
+      if(!tr.length||G.simT-tr[tr.length-1].t>=GREC){const x=gX(k), a=gAir(k,x); tr.push({x:x,t:G.simT,cls:a.cls,life:shortLife(a.rhi)});}
+      if(tr.length>GMAX-1) tr.shift();}}
+  else if(G.passEnd===null) G.passEnd=G.simT;
+  if(G.passEnd!==null){let lasting=false; G.trails.forEach(function(tr){tr.forEach(function(p){if(p.cls===2) lasting=true;});});
+    if(G.simT-G.passEnd>(lasting?1200:90)) gNew();}}
+const gWords={yes:'Yes',no:'No'};
+function gHud(){
+  for(let k=0;k<2;k++){const s=k?'B':'A', x=gFlying()?gX(k):GDIR[k]*GXE, a=gAir(k,x), thr=threshT(a.P,a.rhi,S.eta);
+    $('gAlt'+s).textContent=fAlt(k?PRESETS[S.preset].bFt:S.altFt);
+    const cold=a.cls>0, warm=a.T-thr;
+    $('gCold'+s).textContent=cold?'Yes':'No, '+(us()?Math.round(warm*1.8)+' °F':Math.round(warm)+' °C')+' too warm';
+    $('gWet'+s).textContent=(a.rhi>=1?'Yes, ':'No, ')+Math.round(a.rhi*100)+'%';
+    setChip($('gRes'+s),a.cls);}}
+function gSummary(){ // what the amber track does across the whole view, for the plain-language finding
+  const seen={0:false,1:false,2:false}; for(let x=-GXE;x<=GXE;x+=2000) seen[gAir(0,x).cls]=true;
+  const b={0:false,1:false,2:false}; for(let x=-GXE;x<=GXE;x+=2000) b[gAir(1,x).cls]=true;
+  let h;
+  if(seen[2]&&(seen[1]||seen[0])) h='<strong>Watch the amber aircraft cross the sky.</strong> Its trail is short, or missing, until it flies into the humid pocket, then it spreads into a band, then it stops again on the far side. Nothing on the aircraft switched. The air did.';
+  else if(seen[2]) h='<strong>The amber aircraft is inside humid air the whole way</strong>, so its trail spreads from end to end. That is a deep humid layer, and on days like this the sky fills with crossing bands.';
+  else if(seen[1]) h='<strong>The amber trail forms and then fades.</strong> The air is cold enough to make ice but too dry to keep it, so the crystals turn back to vapour within a minute or two.';
+  else h='<strong>The amber aircraft leaves nothing.</strong> At this height and temperature the exhaust never reaches fog conditions.';
+  const bs=b[2]?'a lasting trail':b[1]?'a short trail':'no trail';
+  h+=' The white aircraft, '+fAlt(PRESETS[S.preset].bFt)+' up, leaves '+bs+' in the same sky. Same engines, same fuel. The difference is the temperature and humidity at each height.';
+  $('gFinding').innerHTML=h;}
+
+const gcv=$('gsky'), gwrap=$('gWrap');
+const gl=gcv.getContext('webgl2',{antialias:false,alpha:false,powerPreference:'high-performance'});
+const GVS='#version 300 es\nin vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+const GFS=`#version 300 es
+precision highp float;
+out vec4 outC;
+uniform vec2 res;uniform vec3 cF,cR,cU;uniform float tanF;
+uniform vec3 sun;uniform vec4 pts[128];
+uniform vec2 H,np;uniform vec3 planeA,planeB;uniform vec2 showPlane;
+uniform float expo,pixA,spreadL,reveal;
+uniform vec4 pk[3];uniform vec3 pkP;uniform float pkN,bg;
+const float R=6371e3,RA=6471e3,R0=6371002.;
+const vec3 bR=vec3(5.8e-6,13.5e-6,33.1e-6);const float bM=21e-6;const float SI=22.;
+float shell(float r0,float mu,float r){float c=(r0-r)*(r0+r);float b=r0*mu;return -c/(b+sqrt(max(b*b-c,0.)));}
+vec2 lightOD(float r,float mu){
+  if(mu<0.&&r*r*(1.-mu*mu)<R*R)return vec2(1e9);
+  float t=shell(r,mu,RA);vec2 od=vec2(0.);
+  for(int i=0;i<4;i++){float u=(float(i)+.5)/4.;float s=t*u*u;float ds=t*2.*u/4.;
+    float rr=sqrt(r*r+s*s+2.*r*mu*s);float h=rr-R;od+=vec2(exp(-h/8000.),exp(-h/1200.))*ds;}
+  return od;}
+float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
+float fbm(vec2 p){float a=.5,s=0.;for(int i=0;i<4;i++){s+=a*vnoise(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}
+float hg(float c,float g){float g2=g*g;return (1.-g2)/(12.566*pow(1.+g2-2.*g*c,1.5));}
+float rhiAt(float xw,float zm){ // same pockets as the side view
+  float b=bg; if(zm>11000.) b*=max(.25,1.-(zm-11000.)/1500.);
+  float r=b; for(int i=0;i<3;i++){if(float(i)>=pkN)break; vec4 k=pk[i];
+    float dx=(xw-k.x)/k.z, dz=(zm-k.y)/k.w; float r2=dx*dx+dz*dz;
+    if(r2<1.){float v=b+(pkP[i]-b)*pow(1.-r2,.7); r=max(r,v);}}
+  return r;}
+float trailAlpha(int k,vec3 dS,float tP,vec3 Pw){
+  int n=int(np[k]);if(n<2)return 0.;
+  vec2 q=vec2(Pw.x,Pw.z);int base=k*64;
+  float best=0.,bestAge=0.,bestW=1.;float foot=tP*pixA*.8;
+  for(int i=0;i<63;i++){if(i>=n-1)break;
+    vec4 A=pts[base+i],B=pts[base+i+1];vec2 ab=B.xy-A.xy;float L2=max(dot(ab,ab),1.);
+    float t=clamp(dot(q-A.xy,ab)/L2,0.,1.);float age=mix(A.z,B.z,t);
+    float wv=t<.5?A.w:B.w; float cls=floor(wv/10000.); float life=wv-cls*10000.;
+    if(cls<.5)continue;
+    float sd=(ab.x*(q.y-A.y)-ab.y*(q.x-A.x))/sqrt(L2);
+    float w=25.+(cls>1.5?spreadL:8.)*age/60.;float we=sqrt(w*w+foot*foot);
+    float sep=16.*exp(-age/25.);
+    float prof=.5*(exp(-pow((sd-sep)/we,2.))+exp(-pow((sd+sep)/we,2.)));
+    float amp=(w/we)*min(1.,120./w);
+    float onset=smoothstep(.6,3.,age);
+    float decay=cls>1.5?max(.42,exp(-age/4000.)):max(0.,1.-age/life);
+    float v=prof*amp*onset*decay;
+    if(v>best){best=v;bestAge=age;bestW=w;}}
+  if(best<.002)return 0.;
+  float nz=fbm(q/(180.+bestW*.6)+vec2(bestAge*.01,float(k)*7.3));
+  float dens=best*mix(1.,.35+1.3*nz,clamp(bestAge/90.,0.,1.));
+  vec3 nrm=normalize(vec3(Pw.x,R0+Pw.y,Pw.z));
+  float thick=min(1./max(dot(nrm,dS),.07),6.);
+  return clamp(1.-exp(-dens*.55*thick),0.,1.);}
+vec3 trailRad(vec3 Pw,float cs){
+  vec3 pp=vec3(Pw.x,R0+Pw.y,Pw.z);float rr=length(pp);
+  vec2 lo=lightOD(rr,dot(pp/rr,sun));vec3 Ts=exp(-(bR*lo.x+bM*1.1*lo.y));
+  float ph=.65*hg(cs,.72)+.35*.0796;
+  vec3 amb=vec3(.30,.42,.62)*SI*.018*clamp(sun.y*4.+.35,.03,1.);
+  return SI*Ts*ph*2.4+amb;}
+float planeMask(vec3 d,vec3 pl){vec3 pd=normalize(pl);float dist=length(pl);
+  float ang=acos(clamp(dot(d,pd),-1.,1.));float sz=max(30./dist,pixA*1.2);
+  return 1.-smoothstep(sz*.6,sz*1.4,ang);}
+void main(){
+  vec2 uv=(gl_FragCoord.xy*2.-res)/res.y;
+  vec3 d=normalize(cF+(uv.x*cR+uv.y*cU)*tanF);
+  bool ground=d.y<-0.0009;
+  float muS=max(d.y,0.0009);vec3 dS=normalize(vec3(d.x,muS,d.z));
+  int lowK=H.x<=H.y?0:1;int hiK=1-lowK;
+  float tLo=shell(R0,muS,R+H[lowK]);float tHi=shell(R0,muS,R+H[hiK]);
+  float tmax=shell(R0,muS,RA);
+  vec2 odV=vec2(0.),odLo=vec2(0.),odHi=vec2(0.);
+  vec3 sR=vec3(0.),sM=vec3(0.),loR=vec3(0.),loM=vec3(0.),hiR=vec3(0.),hiM=vec3(0.);
+  float cs=dot(dS,sun);
+  for(int i=0;i<10;i++){float u=(float(i)+.5)/10.;float s=tmax*u*u;float ds=tmax*2.*u/10.;
+    float rr=sqrt(R0*R0+s*s+2.*R0*muS*s);float h=rr-R;vec2 dn=vec2(exp(-h/8000.),exp(-h/1200.));
+    odV+=dn*ds;vec2 lo=lightOD(rr,(s*cs+R0*sun.y)/rr);
+    vec3 at=exp(-(bR*(odV.x+lo.x)+bM*1.1*(odV.y+lo.y)));
+    sR+=dn.x*at*ds;sM+=dn.y*at*ds;
+    if(s<tLo){loR=sR;loM=sM;odLo=odV;}
+    if(s<tHi){hiR=sR;hiM=sM;odHi=odV;}}
+  float pR=.0597*(1.+cs*cs);float pM=hg(cs,.76);
+  vec3 sky=SI*(sR*bR*pR+sM*bM*pM);
+  vec3 skyLo=SI*(loR*bR*pR+loM*bM*pM),skyHi=SI*(hiR*bR*pR+hiM*bM*pM);
+  vec3 Tv=exp(-(bR*odV.x+bM*1.1*odV.y));
+  if(!ground)sky+=SI*40.*Tv*smoothstep(.99996,.99999,cs);
+  vec3 col=sky;
+  float hatch=0.;
+  if(!ground){
+    vec3 Ph=dS*tHi;float aH=trailAlpha(hiK,dS,tHi,Ph);
+    if(aH>0.){vec3 Th=exp(-(bR*odHi.x+bM*1.1*odHi.y));col=mix(col,skyHi+Th*trailRad(Ph,cs),aH);}
+    vec3 Pl=dS*tLo;float aL=trailAlpha(lowK,dS,tLo,Pl);
+    if(aL>0.){vec3 Tl=exp(-(bR*odLo.x+bM*1.1*odLo.y));col=mix(col,skyLo+Tl*trailRad(Pl,cs),aL);}
+    if(reveal>.5){ // mark where each aircraft's height is ice-supersaturated, out to 30 km either side of the tracks
+      for(int k=0;k<2;k++){float tk=k==lowK?tLo:tHi;vec3 P=dS*tk;
+        float across=1.-smoothstep(25000.,32000.,abs(P.z-12000.));
+        float r=rhiAt(P.x,H[k]);hatch=max(hatch,smoothstep(.98,1.03,r)*across*step(tk,180000.));}}
+    if(showPlane.x>.5)col=mix(col,col*.12,planeMask(d,planeA)*.9);
+    if(showPlane.y>.5)col=mix(col,col*.12,planeMask(d,planeB)*.9);
+  } else {float lit=clamp(sun.y*3.+.1,0.,1.);col=col*.32+vec3(.012,.016,.012)*SI*lit*.15;}
+  col=1.-exp(-col*expo);col=pow(col,vec3(1./2.2));
+  if(hatch>0.){float st=step(.55,fract((gl_FragCoord.x+gl_FragCoord.y)/(7.*res.y/400.)));
+    col=mix(col,vec3(1.),hatch*(.03+.13*st));}
+  col+=(hash(gl_FragCoord.xy)-.5)/255.;
+  outC=vec4(col,1.);
+}`;
+let GP=null,GU={};const gPts=new Float32Array(128*4);
+function gCompile(){
+  if(!gl){$('gNoGL').hidden=false;return false;}
+  const mk=function(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)){console.error(gl.getShaderInfoLog(o));return null;}return o;};
+  const v=mk(gl.VERTEX_SHADER,GVS),f=mk(gl.FRAGMENT_SHADER,GFS);
+  if(!v||!f){$('gNoGL').hidden=false;$('gNoGL').textContent='The ground view could not start on this device. The side view above shows the same thing.';return false;}
+  GP=gl.createProgram();gl.attachShader(GP,v);gl.attachShader(GP,f);gl.linkProgram(GP);
+  if(!gl.getProgramParameter(GP,gl.LINK_STATUS)){$('gNoGL').hidden=false;return false;}
+  gl.useProgram(GP);
+  const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const l=gl.getAttribLocation(GP,'p');gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,2,gl.FLOAT,false,0,0);
+  ['res','cF','cR','cU','tanF','sun','pts','H','np','planeA','planeB','showPlane','expo','pixA','spreadL','reveal','pk','pkP','pkN','bg'].forEach(function(n){GU[n]=gl.getUniformLocation(GP,n);});
+  return true;}
+const GFOV=68*Math.PI/180, GSUN_AZ=-0.75;
+function gResize(){const dpr=Math.min(window.devicePixelRatio||1,2),sc=0.62;
+  const w=Math.max(2,Math.round(gcv.clientWidth*dpr*sc)),h=Math.max(2,Math.round(gcv.clientHeight*dpr*sc));
+  if(gcv.width!==w||gcv.height!==h){gcv.width=w;gcv.height=h;}}
+function gTag(el,v,show,F,Rt,Up,tanF){
+  const len=Math.hypot(v[0],v[1],v[2]),dx=v[0]/len,dy=v[1]/len,dz=v[2]/len,f=dx*F[0]+dy*F[1]+dz*F[2];
+  if(!show||f<0.05){el.hidden=true;return;}
+  const ux=(dx*Rt[0]+dy*Rt[1]+dz*Rt[2])/f/tanF,uy=(dx*Up[0]+dy*Up[1]+dz*Up[2])/f/tanF;
+  const W=gwrap.clientWidth,Hh=gwrap.clientHeight,x=W/2+ux*Hh/2,y=Hh/2-uy*Hh/2;
+  if(x<0||x>W||y<0||y>Hh){el.hidden=true;return;}
+  el.hidden=false;el.style.left=x+'px';el.style.top=y+'px';}
+function gDraw(){
+  gResize();gl.viewport(0,0,gcv.width,gcv.height);
+  const cy=Math.cos(G.yaw),sy=Math.sin(G.yaw),cp=Math.cos(G.pitch),sp=Math.sin(G.pitch);
+  const F=[sy*cp,sp,cy*cp],Rt=[cy,0,-sy],Up=[-sy*sp,cp,-cy*sp],tanF=Math.tan(GFOV/2);
+  gl.uniform2f(GU.res,gcv.width,gcv.height);gl.uniform3fv(GU.cF,F);gl.uniform3fv(GU.cR,Rt);gl.uniform3fv(GU.cU,Up);
+  gl.uniform1f(GU.tanF,tanF);gl.uniform1f(GU.pixA,2*tanF/gcv.height);
+  const el=GSUN[G.sun]*Math.PI/180;gl.uniform3f(GU.sun,Math.sin(GSUN_AZ)*Math.cos(el),Math.sin(el),Math.cos(GSUN_AZ)*Math.cos(el));
+  const Hs=[gAlt(0),gAlt(1)],fly=gFlying(),nps=[0,0],planes=[];
+  for(let k=0;k<2;k++){let n=0;const base=k*64;
+    const push=function(x,age,cls,life){const o=(base+n)*4;gPts[o]=x;gPts[o+1]=GLAT[k]+GWIND*age;gPts[o+2]=age;gPts[o+3]=cls*10000+Math.min(9999,life);n++;};
+    if(fly){const a=gAir(k,gX(k));push(gX(k),0,a.cls,shortLife(a.rhi));}
+    const tr=G.trails[k];for(let i=tr.length-1;i>=0&&n<64;i--)push(tr[i].x,G.simT-tr[i].t,tr[i].cls,tr[i].life);
+    nps[k]=n;const x=gX(k),drop=(x*x+GLAT[k]*GLAT[k])/(2*6371e3);planes.push([x,Hs[k]-2-drop,GLAT[k]]);}
+  gl.uniform4fv(GU.pts,gPts);gl.uniform2f(GU.H,Hs[0],Hs[1]);gl.uniform2f(GU.np,nps[0],nps[1]);
+  gl.uniform3fv(GU.planeA,planes[0]);gl.uniform3fv(GU.planeB,planes[1]);gl.uniform2f(GU.showPlane,fly?1:0,fly?1:0);
+  gl.uniform1f(GU.expo,1.0+3.0*(1-Math.min(1,Math.max(0,(GSUN[G.sun]+6)/12))));
+  gl.uniform1f(GU.spreadL,60);gl.uniform1f(GU.reveal,G.reveal?1:0);
+  const pr=PRESETS[S.preset],pk=new Float32Array(12),pp=[0,0,0];let n=0;
+  pr.pk.forEach(function(k){if(n>=3)return;let dx=k.x-GXC[S.preset];if(k.a<L_KM/2){if(dx>L_KM/2)dx-=L_KM;if(dx<-L_KM/2)dx+=L_KM;}
+    pk[n*4]=dx*1000;pk[n*4+1]=k.z;pk[n*4+2]=k.a*1000;pk[n*4+3]=k.b;pp[n]=k.p;n++;});
+  gl.uniform4fv(GU.pk,pk);gl.uniform3fv(GU.pkP,pp);gl.uniform1f(GU.pkN,n);gl.uniform1f(GU.bg,pr.bg);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  gTag($('gTagA'),planes[0],fly,F,Rt,Up,tanF);gTag($('gTagB'),planes[1],fly,F,Rt,Up,tanF);}
+function gFrame(ts){requestAnimationFrame(gFrame);
+  if(!G.ok||!G.visible||document.hidden){G.last=0;return;}
+  const s=gSig(); if(s!==G.sig){G.sig=s;gReclass();gHud();}
+  if(S.playing){if(G.last) gStep(Math.min(0.05,(ts-G.last)/1000)*GTLAPSE); G.last=ts;} else G.last=0;
+  if(ts-G.hudT>250){G.hudT=ts;gHud();}
+  gDraw();}
+function gInit(){
+  $('gReveal').addEventListener('click',function(){G.reveal=!G.reveal;this.setAttribute('aria-pressed',String(G.reveal));this.textContent=G.reveal?'Hide the humid air':'Show the humid air';$('gKey').hidden=!G.reveal;});
+  [['gNoon','noon'],['gLate','late'],['gDusk','dusk']].forEach(function(p){$(p[0]).addEventListener('click',function(){G.sun=p[1];press(['gNoon','gLate','gDusk'],p[0]);});});
+  $('gAgain').addEventListener('click',gNew);
+  let drag=null;
+  gwrap.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY,yaw:G.yaw,pitch:G.pitch,touch:e.pointerType==='touch'};});
+  gwrap.addEventListener('pointermove',function(e){if(!drag)return;const k=GFOV/gwrap.clientHeight;G.yaw=drag.yaw-(e.clientX-drag.x)*k;
+    if(!drag.touch) G.pitch=Math.max(0.05,Math.min(1.45,drag.pitch+(e.clientY-drag.y)*k));});
+  const end=function(){drag=null;};gwrap.addEventListener('pointerup',end);gwrap.addEventListener('pointercancel',end);gwrap.addEventListener('pointerleave',end);
+  G.sig=gSig();gSummary();gHud();
+  G.ok=gCompile();
+  if(window.IntersectionObserver) new IntersectionObserver(function(es){G.visible=es[0].isIntersecting;},{threshold:0}).observe(gwrap); else G.visible=true;
+  // start with a pass already under way, so the first frame shows trails
+  for(let i=0;i<38;i++) gStep(GREC);
+  requestAnimationFrame(gFrame);}
+
+
 /* ---------- boot ---------- */
 let last=0, hudT=0, lastW=0;
 function frame(ts){if(S.playing){if(last){stepSky(Math.min(0.05,(ts-last)/1000));} last=ts; drawSky(); if(ts-hudT>180){hudT=ts; updateHud();}} else {last=0;} requestAnimationFrame(frame);}
@@ -715,7 +993,7 @@ press(['uUS','uSI'],us()?'uUS':'uSI'); if(!S.playing){$('btnPlay').setAttribute(
 $('btnReveal').textContent='Hide the air';
 if(window.innerWidth<700) S.filter='seed';
 setLabels(); sizeSky(); lastW=$('skyWrap').clientWidth; buildField(); seedTrails(); buildPhase(); updateHud(); drawSky();
-updateMass(); updateLedger(); buildReg(); buildFoot();
+updateMass(); updateLedger(); buildReg(); buildFoot(); gInit();
 if(window.ResizeObserver){new ResizeObserver(layout).observe($('skyWrap'));} else {window.addEventListener('resize',layout);}
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){drawSky();});}
 requestAnimationFrame(frame);
