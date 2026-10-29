@@ -7,6 +7,8 @@ Notes so any new chat or model can pick up where work left off. Update this file
 - **Live page**: claude.ai artifact https://claude.ai/artifact/6Dto2wCmzNXAt5J3uFETHg. `index.html` in this repo is the same page with its own `<head>` for a static deploy.
 - **Latest change**: added "Now look up from the ground" under the side-view sky in *Fly through the sky*. A "See it from the ground" button in the side view's control bar jumps to it.
 
+- **29 Oct 2026, later**: the "How do you know it's humidity and not a schedule?" answer now adds the 2026 contrail-avoidance results (Air France, Google's airline-wide study, Operation Blue Skies over the North Atlantic), with sources in the footer. Revisit when Operation Blue Skies publishes results after its winter trial days.
+
 ## How the ground view works
 
 - Code lives in the block headed `/* ---------- the view from the ground ---------- */`, just before `/* ---------- boot ---------- */`. It starts from `gInit()` at boot.
